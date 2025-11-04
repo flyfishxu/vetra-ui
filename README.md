@@ -9,7 +9,7 @@
 *Building delightful experiences with light, depth, and motion*
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.21-blue.svg)](https://kotlinlang.org)
-[![Compose](https://img.shields.io/badge/Compose%20Multiplatform-1.9.1-brightgreen.svg)](https://www.jetbrains.com/compose-multiplatform/)
+[![Compose](https://img.shields.io/badge/Compose%20Multiplatform-1.9.2-brightgreen.svg)](https://www.jetbrains.com/compose-multiplatform/)
 [![Maven Central](https://img.shields.io/maven-central/v/com.flyfishxu.vetraui/core)](https://central.sonatype.com/artifact/com.flyfishxu.vetraui/core)
 [![License](https://img.shields.io/badge/MIT-yellow.svg)](https://opensource.org/licenses/MIT )
 </div>

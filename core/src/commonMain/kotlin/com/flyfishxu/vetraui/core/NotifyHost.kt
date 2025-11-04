@@ -3,19 +3,29 @@ package com.flyfishxu.vetraui.core
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.flyfishxu.vetraui.core.theme.VetraTheme
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -27,20 +37,64 @@ import kotlin.uuid.Uuid
  * Vetra Notify Host State
  *
  * State holder for managing notifications in the application.
- * Use this to show and manage multiple notifications in a queue.
+ * Supports displaying multiple notifications simultaneously with height limit.
+ * Automatically removes oldest notifications when exceeding screen height limit.
  *
  */
 @Stable
 class NotifyHostState {
     private val mutex = Mutex()
-    private val _currentNotify = mutableStateOf<NotifyItem?>(null)
-    private val notifyQueue = mutableStateListOf<NotifyItem>()
+    private val _notifications = mutableStateListOf<NotifyItem>()
+    private val _visibilityMap = mutableStateMapOf<String, Boolean>()
+    private val _heightMap = mutableStateMapOf<String, Int>()
+    
+    internal var maxHeightPx = 0
 
     /**
-     * The currently visible notification
+     * All currently visible notifications
      */
-    val currentNotify: NotifyItem?
-        get() = _currentNotify.value
+    val notifications: List<NotifyItem>
+        get() = _notifications.toList()
+    
+    /**
+     * Get visibility state for a notification
+     */
+    fun isVisible(id: String): Boolean = _visibilityMap[id] ?: false
+    
+    /**
+     * Internal: Set notification height
+     */
+    internal fun setNotificationHeight(id: String, height: Int) {
+        _heightMap[id] = height
+    }
+
+    /**
+     * Calculate total height of all notifications
+     */
+    private fun calculateTotalHeight(): Int {
+        return _notifications.sumOf { item ->
+            _heightMap[item.id] ?: 80 // Use measured height or default estimate
+        }
+    }
+    
+    /**
+     * Check if adding a new notification would exceed height limit
+     * and remove oldest notifications if needed
+     */
+    private suspend fun checkAndRemoveOldestIfNeeded() {
+        if (maxHeightPx <= 0) return
+        
+        val estimatedNewHeight = 80 // Estimated height for new notification
+        
+        // Remove oldest notifications until we have space for the new one
+        while (_notifications.isNotEmpty()) {
+            val totalHeight = calculateTotalHeight() + estimatedNewHeight
+            if (totalHeight <= maxHeightPx) break
+            
+            val oldestId = _notifications.first().id
+            dismiss(oldestId)
+        }
+    }
 
     /**
      * Show a notification with the given parameters
@@ -69,12 +123,20 @@ class NotifyHostState {
             )
         )
 
+        // Check if we need to remove old notifications
+        if (maxHeightPx > 0) {
+            checkAndRemoveOldestIfNeeded()
+        }
+
         mutex.withLock {
-            if (_currentNotify.value == null) {
-                _currentNotify.value = notifyItem
-            } else {
-                notifyQueue.add(notifyItem)
-            }
+            _notifications.add(notifyItem)
+            _visibilityMap[id] = false
+        }
+        
+        // Delay to allow composition, then trigger enter animation
+        delay(50)
+        mutex.withLock {
+            _visibilityMap[id] = true
         }
 
         return id
@@ -137,39 +199,46 @@ class NotifyHostState {
     ): String = showNotify(message, NotifyType.Danger, duration, dismissible)
 
     /**
-     * Dismiss the current notification
-     */
-    suspend fun dismissCurrent() {
-        mutex.withLock {
-            _currentNotify.value = null
-            if (notifyQueue.isNotEmpty()) {
-                _currentNotify.value = notifyQueue.removeFirst()
-            }
-        }
-    }
-
-    /**
      * Dismiss a specific notification by ID
      *
      * @param id The ID of the notification to dismiss
      */
     suspend fun dismiss(id: String) {
+        // First, trigger exit animation
         mutex.withLock {
-            if (_currentNotify.value?.id == id) {
-                dismissCurrent()
-            } else {
-                notifyQueue.removeAll { it.id == id }
-            }
+            _visibilityMap[id] = false
+        }
+        
+        // Wait for exit animation to complete
+        delay(300)
+        
+        // Then remove from lists
+        mutex.withLock {
+            _notifications.removeAll { it.id == id }
+            _visibilityMap.remove(id)
+            _heightMap.remove(id)
         }
     }
 
     /**
-     * Clear all notifications (current and queued)
+     * Clear all notifications
      */
     suspend fun clearAll() {
+        // Trigger exit animations for all
         mutex.withLock {
-            _currentNotify.value = null
-            notifyQueue.clear()
+            _notifications.forEach { item ->
+                _visibilityMap[item.id] = false
+            }
+        }
+        
+        // Wait for animations
+        delay(300)
+        
+        // Clear all data
+        mutex.withLock {
+            _notifications.clear()
+            _visibilityMap.clear()
+            _heightMap.clear()
         }
     }
 }
@@ -195,6 +264,8 @@ fun rememberNotifyHostState(): NotifyHostState {
  *
  * Container for displaying notifications managed by NotifyHostState.
  * Place this at the top level of your screen or app to show notifications.
+ * Supports multiple notifications with automatic height limit (max 50% of screen height).
+ * Oldest notifications are automatically removed when limit is exceeded.
  *
  * @param hostState The state holder managing notifications
  * @param modifier Modifier for the host container
@@ -204,20 +275,40 @@ fun VetraNotifyHost(
     hostState: NotifyHostState,
     modifier: Modifier = Modifier
 ) {
-    val currentNotify = hostState.currentNotify
-
-    Box(modifier = modifier.fillMaxWidth()) {
-        VetraNotify(
-            visible = currentNotify != null,
-            data = currentNotify?.data ?: NotifyData(message = ""),
-            onDismiss = {
-                // Use a simple state update instead of launching a coroutine
-                // The dismissCurrent will be handled by the LaunchedEffect in VetraNotify
-                kotlinx.coroutines.MainScope().launch {
-                    hostState.dismissCurrent()
+    BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
+        val maxHeight = maxHeight
+        val density = LocalDensity.current
+        
+        // Set max height limit (50% of screen height)
+        LaunchedEffect(maxHeight) {
+            hostState.maxHeightPx = with(density) { (maxHeight / 2).roundToPx() }
+        }
+        
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(max = maxHeight / 2),
+            verticalArrangement = Arrangement.spacedBy(0.dp)
+        ) {
+            hostState.notifications.forEach { notifyItem ->
+                key(notifyItem.id) {
+                    val isVisible = hostState.isVisible(notifyItem.id)
+                    
+                    VetraNotify(
+                        visible = isVisible,
+                        data = notifyItem.data,
+                        onDismiss = {
+                            kotlinx.coroutines.MainScope().launch {
+                                hostState.dismiss(notifyItem.id)
+                            }
+                        },
+                        modifier = Modifier.onSizeChanged { size ->
+                            hostState.setNotificationHeight(notifyItem.id, size.height)
+                        }
+                    )
                 }
             }
-        )
+        }
     }
 }
 

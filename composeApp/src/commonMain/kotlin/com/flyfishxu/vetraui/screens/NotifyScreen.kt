@@ -24,6 +24,7 @@ import com.flyfishxu.vetraui.core.VetraSecondaryButton
 import com.flyfishxu.vetraui.core.VetraSubtleDivider
 import com.flyfishxu.vetraui.core.rememberNotifyHostState
 import com.flyfishxu.vetraui.core.theme.VetraTheme
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
@@ -283,17 +284,17 @@ fun NotifyScreen() {
                 }
             }
 
-            // Queued Notifications
+            // Multiple Notifications
             item {
                 VetraCard(modifier = Modifier.fillMaxWidth()) {
                     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                         Text(
-                            "Notification Queue",
+                            "Multiple Notifications",
                             style = typography.headingMd.copy(color = colors.textPrimary)
                         )
 
                         Text(
-                            "Notifications are automatically queued and shown one at a time",
+                            "Multiple notifications displayed simultaneously (max 50% screen height). Oldest auto-removed when limit exceeded.",
                             style = typography.bodyMd.copy(color = colors.textSecondary)
                         )
 
@@ -310,7 +311,22 @@ fun NotifyScreen() {
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Show 4 Queued Notifications")
+                            Text("Show 4 Stacked Notifications")
+                        }
+                        
+                        VetraSecondaryButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    // Show many notifications to test height limit
+                                    repeat(10) { i ->
+                                        notifyHostState.showInfo("Notification ${i + 1}")
+                                        delay(100)
+                                    }
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Test Height Limit (10 notifications)")
                         }
                     }
                 }
