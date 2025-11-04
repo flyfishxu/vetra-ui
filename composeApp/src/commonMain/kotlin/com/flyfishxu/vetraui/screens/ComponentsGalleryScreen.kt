@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.HourglassBottom
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.QuestionAnswer
 import androidx.compose.material.icons.filled.TouchApp
 import androidx.compose.material.icons.filled.Tune
@@ -170,6 +171,17 @@ fun ComponentsGalleryScreen(
             )
         }
 
+        // Notifications
+        item {
+            ComponentCategoryCard(
+                title = "Notifications",
+                description = "Toast-like notifications that slide in from the top",
+                icon = Icons.Filled.Notifications,
+                iconColor = colors.brand,
+                onClick = { onNavigateToDetail(Destination.NotifyDetail) }
+            )
+        }
+
         // Quick Stats
         item {
             VetraOutlinedCard(modifier = Modifier.fillMaxWidth()) {
@@ -186,7 +198,7 @@ fun ComponentsGalleryScreen(
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         StatItem(
-                            value = "40+",
+                            value = "45+",
                             label = "Components",
                             color = colors.brand
                         )
@@ -199,7 +211,7 @@ fun ComponentsGalleryScreen(
                         )
 
                         StatItem(
-                            value = "8",
+                            value = "9",
                             label = "Categories",
                             color = colors.accent
                         )

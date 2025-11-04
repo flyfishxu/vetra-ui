@@ -57,6 +57,7 @@ import com.flyfishxu.vetraui.screens.DialogsScreen
 import com.flyfishxu.vetraui.screens.InputsScreen
 import com.flyfishxu.vetraui.screens.LoadingScreen
 import com.flyfishxu.vetraui.screens.MenuScreen
+import com.flyfishxu.vetraui.screens.NotifyScreen
 import com.flyfishxu.vetraui.screens.SlidersScreen
 import com.flyfishxu.vetraui.screens.PullToRefreshScreen
 import com.flyfishxu.vetraui.screens.SettingsScreen
@@ -125,6 +126,7 @@ fun App(
                             is Destination.BadgesAndChipsDetail -> "Badges & Chips"
                             is Destination.DialogsDetail -> "Dialogs"
                             is Destination.PullToRefreshDetail -> "Pull to Refresh"
+                            is Destination.NotifyDetail -> "Notifications"
                         }
                     )
                 },
@@ -184,6 +186,7 @@ fun App(
                     is Destination.BadgesAndChipsDetail -> BadgesAndChipsScreen()
                     is Destination.DialogsDetail -> DialogsScreen()
                     is Destination.PullToRefreshDetail -> PullToRefreshScreen()
+                    is Destination.NotifyDetail -> NotifyScreen()
                 }
             }
 
