@@ -108,7 +108,10 @@ fun BadgesAndChipsScreen() {
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(top = 8.dp)
                     ) {
                         VetraBadge("New")
                         VetraBadgeSecondary("Featured")
@@ -136,7 +139,10 @@ fun BadgesAndChipsScreen() {
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(top = 8.dp)
                     ) {
                         VetraBadge("1")
                         VetraBadge("12")
@@ -163,7 +169,10 @@ fun BadgesAndChipsScreen() {
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(top = 8.dp)
                     ) {
                         VetraBadgeOutlined("Beta")
                         VetraBadgeOutlined("v2.0")
@@ -323,31 +332,26 @@ fun BadgesAndChipsScreen() {
                         style = typography.bodyMd.copy(color = colors.textSecondary)
                     )
 
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.padding(top = 8.dp)
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(top = 8.dp)
                     ) {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            VetraChip(label = "Simple", onClick = {})
-                            VetraChip(label = "Clickable", onClick = {})
-                        }
-
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            VetraChip(
-                                label = "With Icon",
-                                leadingIcon = Icons.Default.Star,
-                                onClick = {})
-                            VetraChip(
-                                label = "Removable",
-                                trailingIcon = Icons.Default.Close,
-                                onTrailingIconClick = {},
-                                onClick = {}
-                            )
-                        }
-
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            VetraChip(label = "Disabled", enabled = false)
-                        }
+                        VetraChip(label = "Simple", onClick = {})
+                        VetraChip(label = "Clickable", onClick = {})
+                        VetraChip(
+                            label = "With Icon",
+                            leadingIcon = Icons.Default.Star,
+                            onClick = {})
+                        VetraChip(
+                            label = "Removable",
+                            trailingIcon = Icons.Default.Close,
+                            onTrailingIconClick = {},
+                            onClick = {}
+                        )
+                        VetraChip(label = "Disabled", enabled = false)
                     }
                 }
             }
@@ -368,7 +372,10 @@ fun BadgesAndChipsScreen() {
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(top = 8.dp)
                     ) {
                         VetraChipOutlined(label = "Kotlin", onClick = {})
                         VetraChipOutlined(
@@ -401,7 +408,10 @@ fun BadgesAndChipsScreen() {
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(top = 8.dp)
                     ) {
                         VetraChipElevated(label = "Elevated", onClick = {})
                         VetraChipElevated(
@@ -434,7 +444,10 @@ fun BadgesAndChipsScreen() {
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(top = 8.dp)
                     ) {
                         VetraChipAssist(
                             label = "Add to cart",
@@ -476,7 +489,12 @@ fun BadgesAndChipsScreen() {
                             style = typography.bodySm.copy(color = colors.textSecondary)
                         )
 
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState())
+                        ) {
                             VetraChipFilter(
                                 label = "All",
                                 selected = "All" in selectedFilters,

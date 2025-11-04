@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -109,6 +111,7 @@ fun VetraChip(
 
     Row(
         modifier = finalModifier
+            .defaultMinSize(minHeight = ChipHeight)
             .padding(horizontal = ChipHorizontalPadding, vertical = ChipVerticalPadding),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
@@ -215,6 +218,7 @@ fun VetraChipOutlined(
 
     Row(
         modifier = finalModifier
+            .defaultMinSize(minHeight = ChipHeight)
             .padding(
                 horizontal = ChipHorizontalPadding - 2.dp,
                 vertical = ChipVerticalPadding - 2.dp
@@ -318,6 +322,7 @@ fun VetraChipElevated(
 
     Row(
         modifier = finalModifier
+            .defaultMinSize(minHeight = ChipHeight)
             .padding(horizontal = ChipHorizontalPadding, vertical = ChipVerticalPadding),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
@@ -404,6 +409,7 @@ fun VetraChipAssist(
                 interactionSource = interactionSource,
                 indication = null
             )
+            .defaultMinSize(minHeight = ChipHeight)
             .padding(horizontal = ChipHorizontalPadding, vertical = ChipVerticalPadding),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
@@ -476,6 +482,7 @@ fun VetraChipFilter(
                 interactionSource = interactionSource,
                 indication = null
             )
+            .defaultMinSize(minHeight = ChipHeight)
             .padding(horizontal = ChipHorizontalPadding, vertical = ChipVerticalPadding),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
