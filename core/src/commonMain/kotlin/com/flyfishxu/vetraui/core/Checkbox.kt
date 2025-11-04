@@ -203,7 +203,7 @@ fun VetraCheckboxWithLabel(
     ) {
         VetraCheckbox(
             checked = checked,
-            onCheckedChange = null,  // Handled by Row's clickable
+            onCheckedChange = { onCheckedChange?.invoke(!checked) },
             enabled = enabled,
             indeterminate = indeterminate
         )

@@ -170,7 +170,7 @@ fun VetraSwitchWithLabel(
     ) {
         VetraSwitch(
             checked = checked,
-            onCheckedChange = {},  // Handled by Row's clickable
+            onCheckedChange = { onCheckedChange(!checked) },  // Handled by Row's clickable
             enabled = enabled
         )
 
