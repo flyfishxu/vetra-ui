@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import com.flyfishxu.vetraui.core.indication.vetraPressIndication
 import com.flyfishxu.vetraui.core.theme.VetraTheme
 import com.flyfishxu.vetraui.core.theme.vetraShadow
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -77,7 +78,7 @@ fun VetraCard(
             onClick = onClick,
             role = Role.Button,
             interactionSource = interactionSource,
-            indication = null
+            indication = vetraPressIndication()
         )
     } else {
         baseModifier
@@ -118,7 +119,7 @@ fun VetraFlatCard(
             onClick = onClick,
             role = Role.Button,
             interactionSource = interactionSource,
-            indication = null
+            indication = vetraPressIndication()
         )
     } else {
         baseModifier
@@ -161,7 +162,7 @@ fun VetraElevatedCard(
             onClick = onClick,
             role = Role.Button,
             interactionSource = interactionSource,
-            indication = null
+            indication = vetraPressIndication()
         )
     } else {
         baseModifier
@@ -211,7 +212,7 @@ fun VetraOutlinedCard(
             onClick = onClick,
             role = Role.Button,
             interactionSource = interactionSource,
-            indication = null
+            indication = vetraPressIndication()
         )
     } else {
         baseModifier
@@ -251,7 +252,7 @@ fun VetraBrandCard(
             onClick = onClick,
             role = Role.Button,
             interactionSource = interactionSource,
-            indication = null
+            indication = vetraPressIndication()
         )
     } else {
         baseModifier

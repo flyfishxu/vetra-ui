@@ -38,7 +38,6 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
-import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -54,6 +53,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import com.flyfishxu.vetraui.core.indication.vetraPressIndication
 import com.flyfishxu.vetraui.core.theme.VetraTheme
 import com.flyfishxu.vetraui.core.theme.vetraShadow
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -68,7 +68,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
  * - Animated pill indicator with smooth transitions
  * - Icon scale animations for selected state
  * - Subtle label fade effects
- * - Interactive ripple effect matching the indicator shape
+ * - Elegant press feedback matching the indicator shape
  * - Clean, minimal aesthetic
  * - No heavy shadows, just elevation through color
  */
@@ -162,7 +162,7 @@ fun RowScope.VetraNavigationBarItem(
     val backgroundColor by transition.animateColor(
         transitionSpec = {
             if (targetState) {
-                // Entering - fast appearance to sync with ripple
+                // Entering - fast appearance to sync with press indication
                 tween(durationMillis = 200, easing = EaseOut)
             } else {
                 // Exiting - quick fade
@@ -193,11 +193,11 @@ fun RowScope.VetraNavigationBarItem(
         if (isSelected) 1.1f else 1f
     }
 
-    // Indicator alpha - fast fade in when entering to sync with ripple, quick fade out when exiting
+    // Indicator alpha - fast fade in when entering to sync with press indication, quick fade out when exiting
     val indicatorAlpha by transition.animateFloat(
         transitionSpec = {
             if (targetState) {
-                // Entering - fast fade in to sync with ripple (200ms)
+                // Entering - fast fade in to sync with press indication (200ms)
                 tween(durationMillis = 200, easing = EaseOut)
             } else {
                 // Exiting - quick fade out
@@ -238,7 +238,7 @@ fun RowScope.VetraNavigationBarItem(
             ),
         contentAlignment = Alignment.Center
     ) {
-        // Ripple layer - matches the indicator size and shape
+        // Press indication layer - matches the indicator size and shape
         Box(
             modifier = Modifier
                 .size(
@@ -248,10 +248,7 @@ fun RowScope.VetraNavigationBarItem(
                 .clip(shapes.full)
                 .indication(
                     interactionSource = interactionSource,
-                    indication = ripple(
-                        bounded = true,
-                        color = colors.brand
-                    )
+                    indication = vetraPressIndication()
                 )
         )
 

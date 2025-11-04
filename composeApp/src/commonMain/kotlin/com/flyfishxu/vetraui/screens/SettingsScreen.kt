@@ -1,7 +1,10 @@
 package com.flyfishxu.vetraui.screens
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,8 +27,6 @@ import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material3.Icon
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,15 +37,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import com.flyfishxu.vetraui.core.VetraBrandCard
 import com.flyfishxu.vetraui.core.VetraButton
 import com.flyfishxu.vetraui.core.VetraCard
 import com.flyfishxu.vetraui.core.VetraDangerButton
+import com.flyfishxu.vetraui.core.indication.vetraPressIndication
 import com.flyfishxu.vetraui.core.VetraOutlinedButton
+import com.flyfishxu.vetraui.core.VetraRadioButton
 import com.flyfishxu.vetraui.core.VetraSwitchWithLabel
 import com.flyfishxu.vetraui.core.theme.VetraTheme
+import com.flyfishxu.vetraui.core.theme.vetraShadow
 import com.flyfishxu.vetraui.theme.ThemeMode
 
 @Composable
@@ -310,51 +315,69 @@ fun ThemeModeOption(
     val colors = VetraTheme.colors
     val typography = VetraTheme.typography
     val shapes = VetraTheme.shapes
+    val shadows = VetraTheme.shadows
+    val interactionSource = remember { MutableInteractionSource() }
 
-    Row(
+    // Animate background color smoothly
+    val backgroundColor by animateColorAsState(
+        targetValue = if (selected) colors.brandSubtle else colors.canvasElevated,
+        animationSpec = tween(durationMillis = 200),
+        label = "cardBackgroundColor"
+    )
+
+    // Build card-like appearance with animated background
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(shapes.sm)
-            .clickable(onClick = onClick)
-            .background(
-                if (selected) colors.brandSubtle else colors.canvasSubtle
+            .vetraShadow(elevation = shadows.sm, shape = shapes.md)
+            .clip(shapes.md)
+            // Add subtle border for better definition
+            .background(colors.borderSubtle)
+            .padding(1.dp)
+            .clip(shapes.md)
+            .background(backgroundColor)
+            .clickable(
+                onClick = onClick,
+                role = Role.Button,
+                interactionSource = interactionSource,
+                indication = vetraPressIndication()
             )
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(15.dp) // Reduced by 1dp to account for border
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = if (selected) colors.brand else colors.textSecondary,
-            modifier = Modifier.size(24.dp)
-        )
-
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                title,
-                style = typography.bodyLg.copy(
-                    color = if (selected) colors.onBrandSubtle else colors.textPrimary
-                )
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = if (selected) colors.brand else colors.textSecondary,
+                modifier = Modifier.size(24.dp)
             )
-            Text(
-                description,
-                style = typography.bodySm.copy(
-                    color = if (selected) colors.onBrandSubtle else colors.textSecondary
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    title,
+                    style = typography.bodyLg.copy(
+                        color = if (selected) colors.onBrandSubtle else colors.textPrimary
+                    )
                 )
+                Text(
+                    description,
+                    style = typography.bodySm.copy(
+                        color = if (selected) colors.onBrandSubtle else colors.textSecondary
+                    )
+                )
+            }
+
+            VetraRadioButton(
+                selected = selected,
+                onClick = onClick
             )
         }
-
-        RadioButton(
-            selected = selected,
-            onClick = onClick,
-            colors = RadioButtonDefaults.colors(
-                selectedColor = colors.brand,
-                unselectedColor = colors.border
-            )
-        )
     }
 }
