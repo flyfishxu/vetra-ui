@@ -249,7 +249,6 @@ fun VetraNotify(
                                 role = Role.Button,
                                 interactionSource = interactionSource,
                                 indication = vetraPressIndication(
-                                    pressColor = colors.textPrimary,
                                     pressAlpha = 0.08f
                                 )
                             ),

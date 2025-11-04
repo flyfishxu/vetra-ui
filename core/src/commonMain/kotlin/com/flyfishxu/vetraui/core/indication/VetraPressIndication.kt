@@ -5,11 +5,14 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.IndicationNodeFactory
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.node.DelegatableNode
 import androidx.compose.ui.node.DrawModifierNode
+import com.flyfishxu.vetraui.core.theme.VetraTheme
 import kotlinx.coroutines.launch
 
 /**
@@ -112,13 +115,38 @@ private class VetraPressIndicationNode(
 }
 
 /**
- * Creates a press indication with the specified color and alpha
+ * Creates a press indication with theme-aware color
  *
- * @param pressColor The overlay color (default: black for darkening effect)
+ * Automatically uses the appropriate color based on the current theme:
+ * - Light mode: black overlay for darkening effect
+ * - Dark mode: white overlay for brightening effect
+ *
  * @param pressAlpha The maximum opacity when pressed (default: 0.1 for subtle effect)
  */
+@Composable
 fun vetraPressIndication(
-    pressColor: Color = Color.Black,
+    pressAlpha: Float = 0.1f
+): VetraPressIndication {
+    // Use white color in dark mode for better visibility
+    val pressColor = if (VetraTheme.colors.canvas.luminance() < 0.5f) {
+        Color.White  // Dark mode: use white for brightening effect
+    } else {
+        Color.Black  // Light mode: use black for darkening effect
+    }
+    return VetraPressIndication(pressColor, pressAlpha)
+}
+
+/**
+ * Creates a press indication with custom color
+ *
+ * This is a non-composable variant that allows you to specify a custom press color.
+ * For automatic theme-aware colors, use the Composable version without parameters.
+ *
+ * @param pressColor The overlay color to use when pressed
+ * @param pressAlpha The maximum opacity when pressed (default: 0.1 for subtle effect)
+ */
+fun vetraPressIndicationWithColor(
+    pressColor: Color,
     pressAlpha: Float = 0.1f
 ): VetraPressIndication = VetraPressIndication(pressColor, pressAlpha)
 
