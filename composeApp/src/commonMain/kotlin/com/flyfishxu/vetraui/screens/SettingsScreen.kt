@@ -162,7 +162,7 @@ fun SettingsScreen(
                     }
 
                     Text(
-                        "Version 1.0.0",
+                        "Version 1.0.0-alpha02",
                         style = typography.bodyMd.copy(color = colors.onBrandSubtle)
                     )
 
@@ -177,7 +177,9 @@ fun SettingsScreen(
                     )
 
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        VetraOutlinedButton(onClick = {}) {
+                        VetraOutlinedButton(onClick = {
+                            uriHandler.openUri("https://github.com/flyfishxu/vetra-ui/tree/main/docs")
+                        }) {
                             Text("Documentation")
                         }
                         VetraButton(onClick = {

@@ -79,7 +79,7 @@ mavenPublishing {
     publishToMavenCentral()
     signAllPublications()
 
-    coordinates("com.flyfishxu.vetraui", "core", "1.0.0-alpha02")
+    coordinates("com.flyfishxu.vetraui", "core", libs.versions.vetraui.get())
 
     pom {
         name.set("Vetra UI")

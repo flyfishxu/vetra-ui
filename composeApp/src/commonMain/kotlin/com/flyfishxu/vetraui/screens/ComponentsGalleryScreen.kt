@@ -232,11 +232,6 @@ fun ComponentsGalleryScreen(
                 }
             }
         }
-
-        // Bottom spacing
-        item {
-            Spacer(modifier = Modifier.height(24.dp))
-        }
     }
 }
 
