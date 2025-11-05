@@ -67,19 +67,6 @@ fun DialogsScreen() {
         contentPadding = PaddingValues(24.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        item {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    "Dialogs",
-                    style = typography.displayMd.copy(color = colors.textPrimary)
-                )
-                Text(
-                    "Modal overlays for important interactions and messages",
-                    style = typography.bodyLg.copy(color = colors.textSecondary)
-                )
-            }
-        }
-
         // Standard Dialog
         item {
             DemoSection(title = "Standard Dialog") {

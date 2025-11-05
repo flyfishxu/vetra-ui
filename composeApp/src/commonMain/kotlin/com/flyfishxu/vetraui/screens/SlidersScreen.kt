@@ -59,12 +59,12 @@ fun SlidersScreen() {
         contentPadding = PaddingValues(24.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        // Section: Sliders
+        // Continuous Slider
         item {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Text(
                     "Sliders",
-                    style = typography.displaySm.copy(color = colors.textPrimary)
+                    style = typography.headingLg.copy(color = colors.textPrimary)
                 )
                 Text(
                     "Select values from continuous or discrete ranges",
@@ -72,8 +72,6 @@ fun SlidersScreen() {
                 )
             }
         }
-
-        // Continuous Slider
         item {
             VetraCard(modifier = Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -263,7 +261,7 @@ fun SlidersScreen() {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     "Dividers",
-                    style = typography.displaySm.copy(color = colors.textPrimary)
+                    style = typography.headingLg.copy(color = colors.textPrimary)
                 )
                 Text(
                     "Visual separators for content organization",

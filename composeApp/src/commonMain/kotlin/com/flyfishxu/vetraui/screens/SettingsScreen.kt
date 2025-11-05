@@ -9,30 +9,22 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AutoAwesome
 import androidx.compose.material.icons.outlined.DarkMode
-import androidx.compose.material.icons.outlined.DeleteForever
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.LightMode
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Palette
-import androidx.compose.material.icons.outlined.Refresh
-import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,10 +35,8 @@ import androidx.compose.ui.unit.dp
 import com.flyfishxu.vetraui.core.VetraBrandCard
 import com.flyfishxu.vetraui.core.VetraButton
 import com.flyfishxu.vetraui.core.VetraCard
-import com.flyfishxu.vetraui.core.VetraDangerButton
 import com.flyfishxu.vetraui.core.VetraOutlinedButton
 import com.flyfishxu.vetraui.core.VetraRadioButton
-import com.flyfishxu.vetraui.core.VetraSwitchWithLabel
 import com.flyfishxu.vetraui.core.indication.vetraPressIndication
 import com.flyfishxu.vetraui.core.theme.VetraTheme
 import com.flyfishxu.vetraui.core.theme.vetraShadow
@@ -62,10 +52,6 @@ fun SettingsScreen(
     val colors = VetraTheme.colors
     val typography = VetraTheme.typography
     val uriHandler = LocalUriHandler.current
-
-    var notificationsEnabled by remember { mutableStateOf(true) }
-    var soundEnabled by remember { mutableStateOf(true) }
-    var analyticsEnabled by remember { mutableStateOf(false) }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -156,73 +142,6 @@ fun SettingsScreen(
             }
         }
 
-        // Notifications
-        item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Notifications,
-                            contentDescription = null,
-                            tint = colors.accent
-                        )
-                        Text(
-                            "Notifications",
-                            style = typography.headingMd.copy(color = colors.textPrimary)
-                        )
-                    }
-
-                    VetraSwitchWithLabel(
-                        checked = notificationsEnabled,
-                        onCheckedChange = { notificationsEnabled = it },
-                        label = "Enable Notifications"
-                    )
-
-                    VetraSwitchWithLabel(
-                        checked = soundEnabled,
-                        onCheckedChange = { soundEnabled = it },
-                        label = "Sound Effects"
-                    )
-                }
-            }
-        }
-
-        // Privacy
-        item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Security,
-                            contentDescription = null,
-                            tint = colors.brand
-                        )
-                        Text(
-                            "Privacy & Security",
-                            style = typography.headingMd.copy(color = colors.textPrimary)
-                        )
-                    }
-
-                    VetraSwitchWithLabel(
-                        checked = analyticsEnabled,
-                        onCheckedChange = { analyticsEnabled = it },
-                        label = "Share Analytics"
-                    )
-
-                    Text(
-                        "Help us improve by sharing anonymous usage data",
-                        style = typography.bodySm.copy(color = colors.textSecondary)
-                    )
-                }
-            }
-        }
-
         // About
         item {
             VetraBrandCard(modifier = Modifier.fillMaxWidth()) {
@@ -267,37 +186,6 @@ fun SettingsScreen(
                             Text("GitHub")
                         }
                     }
-                }
-            }
-        }
-
-        // Actions
-        item {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                VetraButton(
-                    onClick = {},
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Refresh,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Reset to Defaults")
-                }
-
-                VetraDangerButton(
-                    onClick = {},
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.DeleteForever,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Clear All Data")
                 }
             }
         }

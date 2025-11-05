@@ -45,7 +45,7 @@ fun LoadingScreen() {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     "Loading Components",
-                    style = typography.displaySm.copy(color = colors.textPrimary)
+                    style = typography.headingLg.copy(color = colors.textPrimary)
                 )
                 Text(
                     "Elegant loading indicators and skeleton loaders",

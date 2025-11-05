@@ -68,19 +68,6 @@ fun InputsScreen() {
         contentPadding = PaddingValues(24.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        item {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    "Input Components",
-                    style = typography.displaySm.copy(color = colors.textPrimary)
-                )
-                Text(
-                    "Text fields and form controls with elegant animations",
-                    style = typography.bodyLg.copy(color = colors.textSecondary)
-                )
-            }
-        }
-
         // Text Fields
         item {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {

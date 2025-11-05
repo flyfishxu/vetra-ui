@@ -63,19 +63,6 @@ fun BadgesAndChipsScreen() {
         contentPadding = PaddingValues(24.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        item {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    "Badges & Chips",
-                    style = typography.displaySm.copy(color = colors.textPrimary)
-                )
-                Text(
-                    "Compact labels and interactive tags for status, filters, and selections",
-                    style = typography.bodyLg.copy(color = colors.textSecondary)
-                )
-            }
-        }
-
         // ========================================
         // BADGES SECTION
         // ========================================

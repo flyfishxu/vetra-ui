@@ -80,19 +80,6 @@ fun MenuScreen() {
         contentPadding = PaddingValues(24.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        item {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    "Menu Components",
-                    style = typography.displaySm.copy(color = colors.textPrimary)
-                )
-                Text(
-                    "Elegant dropdown menus and context menus with smooth animations",
-                    style = typography.bodyLg.copy(color = colors.textSecondary)
-                )
-            }
-        }
-
         // Action feedback card
         item {
             VetraCard(modifier = Modifier.fillMaxWidth()) {

@@ -47,21 +47,6 @@ fun NotifyScreen() {
             contentPadding = PaddingValues(24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            // Header
-            item {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(
-                        "Notifications",
-                        style = typography.displayMd.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "Toast-like notifications that slide in from the top",
-                        style = typography.bodyLg.copy(color = colors.textSecondary)
-                    )
-                }
-            }
-
-            // Basic Types
             item {
                 VetraCard(modifier = Modifier.fillMaxWidth()) {
                     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
