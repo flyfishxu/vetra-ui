@@ -45,7 +45,7 @@
 
 ```toml
 [versions]
-vetraui = "1.0.0-alpha01"
+vetraui = "1.0.0-alpha02"
 
 [libraries]
 vetraui-core = { module = "com.flyfishxu.vetraui:core", version.ref = "vetraui" }

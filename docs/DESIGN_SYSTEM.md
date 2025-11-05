@@ -18,8 +18,6 @@ Vetra UI is a modern design system built from the ground up for Compose Multipla
 8. **Elegant Motion** - Smooth, purposeful animations
 9. **Accessible by Default** - Everyone can use your app comfortably
 
----
-
 ## Color System
 
 ### Semantic Naming
@@ -89,8 +87,6 @@ colors.textSecondary
 - Accent: Vivid purple (#8B5CF6)
 - Canvas: Deep black (#0A0A0A)
 
----
-
 ## Typography
 
 ### Scale System
@@ -122,8 +118,6 @@ Based on a harmonious progression (major second - 1.125×):
 - **labelMd** - 12sp - Form labels
 - **labelSm** - 11sp - Badges
 
----
-
 ## Shape System
 
 ### Corner Radius Scale
@@ -136,8 +130,6 @@ Based on a harmonious progression (major second - 1.125×):
 - **xl** - 24dp - Dialogs
 - **xxl** - 32dp - Full-screen modals
 - **full** - 9999dp - Circular/pills
-
----
 
 ## Shadow System
 
@@ -161,8 +153,6 @@ Vetra's adaptive shadow system features:
 - **Natural Appearance**: Conservative blur radius (1.15-1.2× elevation) prevents excessive spread
 - **Natural Lighting**: Mimics light from above with directional shadows
 - **Cross-Platform**: Consistent rendering on Android, iOS, and Desktop
-
----
 
 ## Components
 
@@ -259,8 +249,6 @@ Vetra's adaptive shadow system features:
 - Smooth icon scale animations
 - Label fade effects
 
----
-
 ## Usage
 
 ### Basic Setup
@@ -309,8 +297,6 @@ fun MyComponent() {
 }
 ```
 
----
-
 ## Design Principles
 
 ### 1. Semantic Over Technical
@@ -350,8 +336,6 @@ Every animation should:
 - Touch targets: minimum 44dp × 44dp
 - Clear disabled states
 
----
-
 ## Differences from Material Design
 
 | Aspect | Material Design | Vetra UI |
@@ -363,8 +347,6 @@ Every animation should:
 | **Learning Curve** | Complex color roles | Intuitive names |
 | **Animations** | Standard durations | Refined, purposeful |
 | **Dark Mode** | Single shadow config | Adaptive shadow opacity |
-
----
 
 ## Best Practices
 
@@ -387,8 +369,6 @@ Every animation should:
 - Skip animation specs
 - Ignore disabled states
 - Forget about keyboard navigation
-
----
 
 ## Migration from Material
 
