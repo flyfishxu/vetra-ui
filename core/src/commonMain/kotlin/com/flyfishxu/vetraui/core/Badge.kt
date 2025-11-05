@@ -1,6 +1,7 @@
 package com.flyfishxu.vetraui.core
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -265,21 +266,9 @@ fun VetraBadgeOutlined(
 
     Box(
         modifier = modifier
+            .border(width = 1.dp, color = colors.border, shape = shapes.xs)
             .clip(shapes.xs)
-            .background(Color.Transparent)
-            .then(
-                // Border implementation
-                Modifier
-                    .padding(1.dp)
-                    .background(colors.border, shapes.xs)
-                    .padding(1.dp)
-                    .clip(shapes.xs)
-                    .background(Color.Transparent, shapes.xs)
-            )
-            .padding(
-                horizontal = BadgeHorizontalPadding - 2.dp,
-                vertical = BadgeVerticalPadding
-            ),
+            .padding(horizontal = BadgeHorizontalPadding, vertical = BadgeVerticalPadding),
         contentAlignment = Alignment.Center
     ) {
         CompositionLocalProvider(

@@ -37,7 +37,6 @@ import com.flyfishxu.vetraui.core.VetraBadgeWarning
 import com.flyfishxu.vetraui.core.VetraCard
 import com.flyfishxu.vetraui.core.VetraChip
 import com.flyfishxu.vetraui.core.VetraChipAssist
-import com.flyfishxu.vetraui.core.VetraChipElevated
 import com.flyfishxu.vetraui.core.VetraChipFilter
 import com.flyfishxu.vetraui.core.VetraChipOutlined
 import com.flyfishxu.vetraui.core.VetraOutlinedCard
@@ -371,42 +370,6 @@ fun BadgesAndChipsScreen() {
                             onClick = {})
                         VetraChipOutlined(
                             label = "Android",
-                            trailingIcon = Icons.Default.Close,
-                            onTrailingIconClick = {},
-                            onClick = {}
-                        )
-                    }
-                }
-            }
-        }
-
-        // Elevated Chips
-        item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text(
-                        "Elevated Chips",
-                        style = typography.headingMd.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "Prominent chips with elevation",
-                        style = typography.bodyMd.copy(color = colors.textSecondary)
-                    )
-
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .horizontalScroll(rememberScrollState())
-                            .padding(top = 8.dp)
-                    ) {
-                        VetraChipElevated(label = "Elevated", onClick = {})
-                        VetraChipElevated(
-                            label = "Featured",
-                            leadingIcon = Icons.Default.Star,
-                            onClick = {})
-                        VetraChipElevated(
-                            label = "Premium",
                             trailingIcon = Icons.Default.Close,
                             onTrailingIconClick = {},
                             onClick = {}

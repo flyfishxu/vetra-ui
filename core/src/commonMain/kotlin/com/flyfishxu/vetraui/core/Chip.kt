@@ -1,6 +1,7 @@
 package com.flyfishxu.vetraui.core
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -30,7 +31,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.flyfishxu.vetraui.core.theme.VetraTheme
-import com.flyfishxu.vetraui.core.theme.vetraShadow
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /**
@@ -42,7 +42,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
  * Chip Variants:
  * - Standard (VetraChip): Solid background for default states
  * - Outlined (VetraChipOutlined): Border only for subtle emphasis
- * - Elevated (VetraChipElevated): Elevated with shadow for prominence
  * - Assist (VetraChipAssist): Action chip for suggestions
  * - Filter (VetraChipFilter): Filter chip with selection state
  *
@@ -191,121 +190,8 @@ fun VetraChipOutlined(
     val contentColor = if (enabled) colors.textPrimary else colors.textDisabled
 
     val baseModifier = modifier
+        .border(width = 1.dp, color = borderColor, shape = shapes.xs)
         .clip(shapes.xs)
-        .background(Color.Transparent)
-        .then(
-            // Border implementation
-            Modifier
-                .padding(1.dp)
-                .background(borderColor, shapes.xs)
-                .padding(1.dp)
-                .clip(shapes.xs)
-                .background(Color.Transparent, shapes.xs)
-        )
-
-    val finalModifier = if (onClick != null) {
-        baseModifier.clickable(
-            onClick = onClick,
-            enabled = enabled,
-            role = Role.Button,
-            interactionSource = interactionSource,
-            indication = null
-        )
-    } else {
-        baseModifier
-    }
-
-    Row(
-        modifier = finalModifier
-            .defaultMinSize(minHeight = ChipHeight)
-            .padding(
-                horizontal = ChipHorizontalPadding - 2.dp,
-                vertical = ChipVerticalPadding - 2.dp
-            ),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (leadingIcon != null) {
-            Icon(
-                imageVector = leadingIcon,
-                contentDescription = null,
-                modifier = Modifier.size(ChipIconSize),
-                tint = contentColor
-            )
-            Spacer(modifier = Modifier.width(6.dp))
-        }
-
-        CompositionLocalProvider(
-            LocalContentColor provides contentColor,
-            LocalTextStyle provides typography.labelMd.copy(color = contentColor)
-        ) {
-            Text(label)
-        }
-
-        if (trailingIcon != null) {
-            Spacer(modifier = Modifier.width(4.dp))
-            val trailingInteractionSource = remember { MutableInteractionSource() }
-            val trailingModifier = if (onTrailingIconClick != null) {
-                Modifier
-                    .size(ChipTrailingIconSize)
-                    .clickable(
-                        onClick = onTrailingIconClick,
-                        enabled = enabled,
-                        role = Role.Button,
-                        interactionSource = trailingInteractionSource,
-                        indication = null
-                    )
-            } else {
-                Modifier.size(ChipTrailingIconSize)
-            }
-
-            Icon(
-                imageVector = trailingIcon,
-                contentDescription = if (onTrailingIconClick != null) "Remove" else null,
-                modifier = trailingModifier,
-                tint = contentColor
-            )
-        }
-    }
-}
-
-/**
- * Elevated Chip - Elevated with shadow for prominence
- *
- * Use for prominent tags or selections that need emphasis.
- *
- * @param label Chip text label
- * @param modifier Modifier for the chip
- * @param onClick Optional click handler
- * @param enabled Whether the chip is enabled
- * @param leadingIcon Optional leading icon
- * @param trailingIcon Optional trailing icon or action
- * @param onTrailingIconClick Optional click handler for trailing icon
- */
-@Composable
-fun VetraChipElevated(
-    label: String,
-    modifier: Modifier = Modifier,
-    onClick: (() -> Unit)? = null,
-    enabled: Boolean = true,
-    leadingIcon: ImageVector? = null,
-    trailingIcon: ImageVector? = null,
-    onTrailingIconClick: (() -> Unit)? = null
-) {
-    val colors = VetraTheme.colors
-    val shapes = VetraTheme.shapes
-    val shadows = VetraTheme.shadows
-    val typography = VetraTheme.typography
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val backgroundColor = if (enabled) colors.canvasElevated else colors.borderSubtle
-    val contentColor = if (enabled) colors.textPrimary else colors.textDisabled
-    val shadow = if (enabled) shadows.sm else shadows.none
-
-    val baseModifier = modifier
-        .vetraShadow(elevation = shadow, shape = shapes.xs)
-        .clip(shapes.xs)
-        .background(backgroundColor)
 
     val finalModifier = if (onClick != null) {
         baseModifier.clickable(
@@ -558,21 +444,6 @@ private fun VetraChipPreview() {
                 )
             }
 
-            // Elevated Chips
-            Text(
-                "Elevated Chips",
-                style = VetraTheme.typography.headingSm.copy(color = VetraTheme.colors.textPrimary)
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                VetraChipElevated(label = "Elevated")
-                VetraChipElevated(label = "Featured", leadingIcon = Icons.Default.Add)
-                VetraChipElevated(
-                    label = "Premium",
-                    trailingIcon = Icons.Default.Close,
-                    onTrailingIconClick = {}
-                )
-            }
-
             // Assist Chips
             Text(
                 "Assist Chips",
@@ -649,7 +520,6 @@ private fun VetraChipDarkPreview() {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 VetraChip(label = "Standard")
                 VetraChipOutlined(label = "Outlined")
-                VetraChipElevated(label = "Elevated")
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 VetraChipAssist(label = "Assist", onClick = {})
