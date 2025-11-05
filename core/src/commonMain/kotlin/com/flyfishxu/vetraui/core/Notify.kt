@@ -5,8 +5,8 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -129,7 +129,7 @@ fun VetraNotify(
 ) {
     val colors = VetraTheme.colors
     val shapes = VetraTheme.shapes
-    val shadows = VetraTheme.shadows
+    VetraTheme.shadows
     val typography = VetraTheme.typography
 
     // Auto-dismiss logic
@@ -148,18 +148,21 @@ fun VetraNotify(
             colors.info,
             Icons.Default.Info
         )
+
         NotifyType.Success -> Tuple4(
             colors.canvasElevated,
             colors.textPrimary,
             colors.success,
             Icons.Default.Check
         )
+
         NotifyType.Warning -> Tuple4(
             colors.canvasElevated,
             colors.textPrimary,
             colors.warning,
             Icons.Default.Warning
         )
+
         NotifyType.Danger -> Tuple4(
             colors.canvasElevated,
             colors.textPrimary,
@@ -167,7 +170,7 @@ fun VetraNotify(
             Icons.Default.Close
         )
     }
-    
+
     val backgroundColor = notifyStyle.first
     val contentColor = notifyStyle.second
     val accentColor = notifyStyle.third
@@ -201,7 +204,7 @@ fun VetraNotify(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shapes.sm)
-                    .border(width= 1.dp, color = notifyStyle.third, shape = shapes.sm)
+                    .border(width = 1.dp, color = notifyStyle.third, shape = shapes.sm)
                     .background(backgroundColor)
                     .padding(
                         horizontal = NotifyHorizontalPadding,

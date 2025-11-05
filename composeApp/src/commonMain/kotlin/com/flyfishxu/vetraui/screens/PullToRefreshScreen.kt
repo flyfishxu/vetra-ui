@@ -53,10 +53,30 @@ fun PullToRefreshScreen() {
     var refreshing by remember { mutableStateOf(false) }
     val items = remember {
         mutableStateListOf(
-            NewsItem("New Feature Released", "Vetra UI now supports pull-to-refresh", "2 min ago", Icons.Default.Star),
-            NewsItem("Design Update", "Updated color schemes and shadows", "15 min ago", Icons.AutoMirrored.Filled.Article),
-            NewsItem("Community", "50+ developers joined this week", "1 hour ago", Icons.Default.Person),
-            NewsItem("Announcement", "Version 1.0 coming soon", "3 hours ago", Icons.Default.Notifications)
+            NewsItem(
+                "New Feature Released",
+                "Vetra UI now supports pull-to-refresh",
+                "2 min ago",
+                Icons.Default.Star
+            ),
+            NewsItem(
+                "Design Update",
+                "Updated color schemes and shadows",
+                "15 min ago",
+                Icons.AutoMirrored.Filled.Article
+            ),
+            NewsItem(
+                "Community",
+                "50+ developers joined this week",
+                "1 hour ago",
+                Icons.Default.Person
+            ),
+            NewsItem(
+                "Announcement",
+                "Version 1.0 coming soon",
+                "3 hours ago",
+                Icons.Default.Notifications
+            )
         )
     }
 
@@ -74,7 +94,7 @@ fun PullToRefreshScreen() {
                     icon = Icons.Default.Star
                 )
                 items.add(0, newItem)
-                
+
                 refreshing = false
             }
         },

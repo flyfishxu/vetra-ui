@@ -34,7 +34,7 @@ class VetraPressIndication(
     private val pressColor: Color = Color.Black,
     private val pressAlpha: Float = 0.1f
 ) : IndicationNodeFactory {
-    
+
     override fun create(interactionSource: InteractionSource): DelegatableNode {
         return VetraPressIndicationNode(
             interactionSource = interactionSource,
@@ -52,10 +52,10 @@ class VetraPressIndication(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is VetraPressIndication) return false
-        
+
         if (pressColor != other.pressColor) return false
         if (pressAlpha != other.pressAlpha) return false
-        
+
         return true
     }
 }
@@ -68,13 +68,13 @@ private class VetraPressIndicationNode(
     private val pressColor: Color,
     private val pressAlpha: Float
 ) : Modifier.Node(), DrawModifierNode {
-    
+
     private val animatedAlpha = Animatable(0f)
-    
+
     override fun onAttach() {
         coroutineScope.launch {
             var pressCount = 0
-            
+
             interactionSource.interactions.collect { interaction ->
                 when (interaction) {
                     is PressInteraction.Press -> {
@@ -84,6 +84,7 @@ private class VetraPressIndicationNode(
                             animationSpec = spring()
                         )
                     }
+
                     is PressInteraction.Release,
                     is PressInteraction.Cancel -> {
                         pressCount = (pressCount - 1).coerceAtLeast(0)
@@ -98,11 +99,11 @@ private class VetraPressIndicationNode(
             }
         }
     }
-    
+
     override fun ContentDrawScope.draw() {
         // Draw the original content first
         drawContent()
-        
+
         // Draw the press overlay on top if there's any alpha
         val currentAlpha = animatedAlpha.value
         if (currentAlpha > 0f) {

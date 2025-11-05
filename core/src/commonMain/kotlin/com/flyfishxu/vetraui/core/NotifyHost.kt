@@ -45,7 +45,7 @@ class NotifyHostState {
     private val _notifications = mutableStateListOf<NotifyItem>()
     private val _visibilityMap = mutableStateMapOf<String, Boolean>()
     private val _heightMap = mutableStateMapOf<String, Int>()
-    
+
     internal var maxHeightPx = 0
 
     /**
@@ -53,12 +53,12 @@ class NotifyHostState {
      */
     val notifications: List<NotifyItem>
         get() = _notifications.toList()
-    
+
     /**
      * Get visibility state for a notification
      */
     fun isVisible(id: String): Boolean = _visibilityMap[id] ?: false
-    
+
     /**
      * Internal: Set notification height
      */
@@ -74,21 +74,21 @@ class NotifyHostState {
             _heightMap[item.id] ?: 80 // Use measured height or default estimate
         }
     }
-    
+
     /**
      * Check if adding a new notification would exceed height limit
      * and remove oldest notifications if needed
      */
     private suspend fun checkAndRemoveOldestIfNeeded() {
         if (maxHeightPx <= 0) return
-        
+
         val estimatedNewHeight = 80 // Estimated height for new notification
-        
+
         // Remove oldest notifications until we have space for the new one
         while (_notifications.isNotEmpty()) {
             val totalHeight = calculateTotalHeight() + estimatedNewHeight
             if (totalHeight <= maxHeightPx) break
-            
+
             val oldestId = _notifications.first().id
             dismiss(oldestId)
         }
@@ -130,7 +130,7 @@ class NotifyHostState {
             _notifications.add(notifyItem)
             _visibilityMap[id] = false
         }
-        
+
         // Delay to allow composition, then trigger enter animation
         delay(50)
         mutex.withLock {
@@ -206,10 +206,10 @@ class NotifyHostState {
         mutex.withLock {
             _visibilityMap[id] = false
         }
-        
+
         // Wait for exit animation to complete
         delay(300)
-        
+
         // Then remove from lists
         mutex.withLock {
             _notifications.removeAll { it.id == id }
@@ -228,10 +228,10 @@ class NotifyHostState {
                 _visibilityMap[item.id] = false
             }
         }
-        
+
         // Wait for animations
         delay(300)
-        
+
         // Clear all data
         mutex.withLock {
             _notifications.clear()
@@ -278,12 +278,12 @@ fun VetraNotifyHost(
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
         val maxHeight = maxHeight
         val density = LocalDensity.current
-        
+
         // Set max height limit (50% of screen height)
         LaunchedEffect(maxHeight) {
             hostState.maxHeightPx = with(density) { (maxHeight / 2).roundToPx() }
         }
-        
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()

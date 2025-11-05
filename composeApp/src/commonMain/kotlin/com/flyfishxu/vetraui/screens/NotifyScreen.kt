@@ -313,7 +313,7 @@ fun NotifyScreen() {
                         ) {
                             Text("Show 4 Stacked Notifications")
                         }
-                        
+
                         VetraSecondaryButton(
                             onClick = {
                                 coroutineScope.launch {
