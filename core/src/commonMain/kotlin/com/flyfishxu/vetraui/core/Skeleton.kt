@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,12 +44,46 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
  * - Multiple shape variants
  * - Customizable colors
  * - Composable skeleton layouts
+ * - Shared animation state for better performance
  */
+
+// CompositionLocal for sharing shimmer animation state across skeleton instances
+private val LocalSkeletonShimmer = compositionLocalOf { 0f }
+
+/**
+ * VetraSkeletonScope
+ *
+ * Provides shared animation state for all skeleton components within its scope.
+ * Use this to wrap multiple skeleton components to share animation state and improve performance.
+ *
+ * @param content Content with skeleton components
+ */
+@Composable
+fun VetraSkeletonScope(
+    content: @Composable () -> Unit
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "skeleton")
+
+    val shimmerTranslate by infiniteTransition.animateFloat(
+        initialValue = -1f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1500, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "shimmer"
+    )
+
+    CompositionLocalProvider(LocalSkeletonShimmer provides shimmerTranslate) {
+        content()
+    }
+}
 
 /**
  * Basic Skeleton Box
  *
  * A skeleton placeholder with shimmer animation.
+ * When used inside VetraSkeletonScope, shares animation state for better performance.
  *
  * @param modifier Modifier for the skeleton
  * @param shape Shape of the skeleton
@@ -61,17 +97,23 @@ fun VetraSkeleton(
     baseColor: Color = VetraTheme.colors.borderSubtle,
     shimmerColor: Color = VetraTheme.colors.canvasElevated
 ) {
-    val infiniteTransition = rememberInfiniteTransition(label = "skeleton")
-
-    val shimmerTranslate by infiniteTransition.animateFloat(
-        initialValue = -1f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1500, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "shimmer"
-    )
+    // Try to use shared shimmer animation if available, otherwise create own
+    val shimmerTranslate = try {
+        LocalSkeletonShimmer.current
+    } catch (e: IllegalStateException) {
+        // Fallback: create own animation if not inside VetraSkeletonScope
+        val infiniteTransition = rememberInfiniteTransition(label = "skeleton")
+        val shimmer by infiniteTransition.animateFloat(
+            initialValue = -1f,
+            targetValue = 1f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(1500, easing = LinearEasing),
+                repeatMode = RepeatMode.Restart
+            ),
+            label = "shimmer"
+        )
+        shimmer
+    }
 
     Box(
         modifier = modifier
@@ -136,6 +178,7 @@ fun VetraSkeletonCircle(
  * Skeleton Card
  *
  * A pre-composed skeleton for card-like content.
+ * Automatically uses shared animation state for better performance.
  *
  * @param modifier Modifier for the skeleton
  * @param showImage Whether to show an image placeholder
@@ -149,27 +192,29 @@ fun VetraSkeletonCard(
     imageHeight: Dp = 200.dp,
     linesCount: Int = 3
 ) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        if (showImage) {
-            VetraSkeleton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(imageHeight)
-            )
-        }
-
-        repeat(linesCount) { index ->
-            val width = when (index) {
-                linesCount - 1 -> 0.6f  // Last line shorter
-                else -> if (index % 2 == 0) 1f else 0.9f
+    VetraSkeletonScope {
+        Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            if (showImage) {
+                VetraSkeleton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(imageHeight)
+                )
             }
 
-            VetraSkeletonText(
-                modifier = Modifier.fillMaxWidth(width)
-            )
+            repeat(linesCount) { index ->
+                val width = when (index) {
+                    linesCount - 1 -> 0.6f  // Last line shorter
+                    else -> if (index % 2 == 0) 1f else 0.9f
+                }
+
+                VetraSkeletonText(
+                    modifier = Modifier.fillMaxWidth(width)
+                )
+            }
         }
     }
 }
@@ -178,6 +223,7 @@ fun VetraSkeletonCard(
  * Skeleton List Item
  *
  * A pre-composed skeleton for list item content.
+ * Automatically uses shared animation state for better performance.
  *
  * @param modifier Modifier for the skeleton
  * @param showAvatar Whether to show an avatar placeholder
@@ -191,28 +237,30 @@ fun VetraSkeletonListItem(
     avatarSize: Dp = 48.dp,
     linesCount: Int = 2
 ) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        if (showAvatar) {
-            VetraSkeletonCircle(size = avatarSize)
-        }
-
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+    VetraSkeletonScope {
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            repeat(linesCount) { index ->
-                val width = when (index) {
-                    0 -> 0.7f  // Title
-                    else -> if (index == linesCount - 1) 0.4f else 0.9f
-                }
+            if (showAvatar) {
+                VetraSkeletonCircle(size = avatarSize)
+            }
 
-                VetraSkeletonText(
-                    modifier = Modifier.fillMaxWidth(width),
-                    height = if (index == 0) 18.dp else 14.dp
-                )
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                repeat(linesCount) { index ->
+                    val width = when (index) {
+                        0 -> 0.7f  // Title
+                        else -> if (index == linesCount - 1) 0.4f else 0.9f
+                    }
+
+                    VetraSkeletonText(
+                        modifier = Modifier.fillMaxWidth(width),
+                        height = if (index == 0) 18.dp else 14.dp
+                    )
+                }
             }
         }
     }

@@ -206,25 +206,25 @@ class VetraPullToRefreshState(
     }
 
     private suspend fun animatePullOffsetTo(target: Float) {
-        // Simple linear animation for pull offset using frame time
+        // Frame-based animation for pull offset - more efficient than delay
         val start = pullOffset
         val durationNanos = 200_000_000L // 200ms in nanoseconds
 
         val startTime = withFrameNanos { it }
 
         while (pullOffset != target) {
-            val currentTime = withFrameNanos { it }
-            val elapsed = currentTime - startTime
-            val progress = (elapsed.toFloat() / durationNanos).coerceIn(0f, 1f)
+            withFrameNanos { frameTime ->
+                val elapsed = frameTime - startTime
+                val progress = (elapsed.toFloat() / durationNanos).coerceIn(0f, 1f)
 
-            pullOffset = start + (target - start) * progress
-
-            if (progress >= 1f) {
-                pullOffset = target
-                break
+                pullOffset = if (progress >= 1f) {
+                    target
+                } else {
+                    start + (target - start) * progress
+                }
             }
 
-            kotlinx.coroutines.delay(16)
+            if (pullOffset == target) break
         }
     }
 }

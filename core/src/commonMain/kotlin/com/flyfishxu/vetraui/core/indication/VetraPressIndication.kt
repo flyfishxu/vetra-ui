@@ -128,13 +128,17 @@ private class VetraPressIndicationNode(
 fun vetraPressIndication(
     pressAlpha: Float = 0.1f
 ): VetraPressIndication {
-    // Use white color in dark mode for better visibility
-    val pressColor = if (VetraTheme.colors.canvas.luminance() < 0.5f) {
-        Color.White  // Dark mode: use white for brightening effect
-    } else {
-        Color.Black  // Light mode: use black for darkening effect
+    // Cache the color calculation - only recalculates when canvas color changes
+    val pressColor = remember(VetraTheme.colors.canvas) {
+        if (VetraTheme.colors.canvas.luminance() < 0.5f) {
+            Color.White  // Dark mode: use white for brightening effect
+        } else {
+            Color.Black  // Light mode: use black for darkening effect
+        }
     }
-    return VetraPressIndication(pressColor, pressAlpha)
+    return remember(pressColor, pressAlpha) {
+        VetraPressIndication(pressColor, pressAlpha)
+    }
 }
 
 /**

@@ -54,6 +54,83 @@ private val ButtonHorizontalPadding = 20.dp
 private val ButtonVerticalPadding = 12.dp
 
 /**
+ * Button style configuration for different button variants
+ */
+private data class ButtonStyle(
+    val backgroundColor: Color,
+    val contentColor: Color,
+    val hasShadow: Boolean,
+    val hasBorder: Boolean
+)
+
+/**
+ * Internal base button implementation shared by all button variants.
+ * Eliminates code duplication and improves maintainability.
+ */
+@Composable
+private fun BaseButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    style: ButtonStyle,
+    content: @Composable RowScope.() -> Unit
+) {
+    val colors = VetraTheme.colors
+    val shapes = VetraTheme.shapes
+    val shadows = VetraTheme.shadows
+    val interactionSource = remember { MutableInteractionSource() }
+
+    val shadow = if (enabled && style.hasShadow) shadows.sm else shadows.none
+
+    val baseModifier = modifier
+        .defaultMinSize(minWidth = ButtonMinWidth, minHeight = ButtonHeight)
+        .vetraShadow(elevation = shadow, shape = shapes.sm)
+        .clip(shapes.sm)
+
+    val modifierWithBorder = if (style.hasBorder) {
+        val borderColor = if (enabled) colors.border else colors.borderSubtle
+        baseModifier
+            .background(Color.Transparent)
+            .padding(1.dp)
+            .background(borderColor, shapes.sm)
+            .padding(1.dp)
+            .background(colors.canvasElevated, shapes.sm)
+    } else {
+        baseModifier.background(style.backgroundColor)
+    }
+
+    val paddingAdjustment = if (style.hasBorder) 2.dp else 0.dp
+
+    Box(
+        modifier = modifierWithBorder
+            .clickable(
+                onClick = onClick,
+                enabled = enabled,
+                role = Role.Button,
+                interactionSource = interactionSource,
+                indication = vetraPressIndication()
+            )
+            .padding(
+                horizontal = ButtonHorizontalPadding - paddingAdjustment,
+                vertical = ButtonVerticalPadding - paddingAdjustment
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CompositionLocalProvider(
+                LocalContentColor provides style.contentColor,
+                LocalTextStyle provides VetraTheme.typography.labelLg.copy(color = style.contentColor)
+            ) {
+                content()
+            }
+        }
+    }
+}
+
+/**
  * Primary Button - Solid brand color for main actions
  *
  * Use for the most important action on a screen.
@@ -72,42 +149,18 @@ fun VetraButton(
     content: @Composable RowScope.() -> Unit
 ) {
     val colors = VetraTheme.colors
-    val shapes = VetraTheme.shapes
-    val shadows = VetraTheme.shadows
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val backgroundColor = if (enabled) colors.brand else colors.brandDisabled
-    val contentColor = if (enabled) colors.onBrand else colors.onBrandDisabled
-    val shadow = if (enabled) shadows.sm else shadows.none
-
-    Box(
-        modifier = modifier
-            .defaultMinSize(minWidth = ButtonMinWidth, minHeight = ButtonHeight)
-            .vetraShadow(elevation = shadow, shape = shapes.sm)
-            .clip(shapes.sm)
-            .background(backgroundColor)
-            .clickable(
-                onClick = onClick,
-                enabled = enabled,
-                role = Role.Button,
-                interactionSource = interactionSource,
-                indication = vetraPressIndication()
-            )
-            .padding(horizontal = ButtonHorizontalPadding, vertical = ButtonVerticalPadding),
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CompositionLocalProvider(
-                LocalContentColor provides contentColor,
-                LocalTextStyle provides VetraTheme.typography.labelLg.copy(color = contentColor)
-            ) {
-                content()
-            }
-        }
-    }
+    BaseButton(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        style = ButtonStyle(
+            backgroundColor = if (enabled) colors.brand else colors.brandDisabled,
+            contentColor = if (enabled) colors.onBrand else colors.onBrandDisabled,
+            hasShadow = true,
+            hasBorder = false
+        ),
+        content = content
+    )
 }
 
 /**
@@ -129,42 +182,18 @@ fun VetraSecondaryButton(
     content: @Composable RowScope.() -> Unit
 ) {
     val colors = VetraTheme.colors
-    val shapes = VetraTheme.shapes
-    val shadows = VetraTheme.shadows
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val backgroundColor = if (enabled) colors.accent else colors.accentDisabled
-    val contentColor = if (enabled) colors.onAccent else colors.onAccentDisabled
-    val shadow = if (enabled) shadows.sm else shadows.none
-
-    Box(
-        modifier = modifier
-            .defaultMinSize(minWidth = ButtonMinWidth, minHeight = ButtonHeight)
-            .vetraShadow(elevation = shadow, shape = shapes.sm)
-            .clip(shapes.sm)
-            .background(backgroundColor)
-            .clickable(
-                onClick = onClick,
-                enabled = enabled,
-                role = Role.Button,
-                interactionSource = interactionSource,
-                indication = vetraPressIndication()
-            )
-            .padding(horizontal = ButtonHorizontalPadding, vertical = ButtonVerticalPadding),
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CompositionLocalProvider(
-                LocalContentColor provides contentColor,
-                LocalTextStyle provides VetraTheme.typography.labelLg.copy(color = contentColor)
-            ) {
-                content()
-            }
-        }
-    }
+    BaseButton(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        style = ButtonStyle(
+            backgroundColor = if (enabled) colors.accent else colors.accentDisabled,
+            contentColor = if (enabled) colors.onAccent else colors.onAccentDisabled,
+            hasShadow = true,
+            hasBorder = false
+        ),
+        content = content
+    )
 }
 
 /**
@@ -186,50 +215,18 @@ fun VetraOutlinedButton(
     content: @Composable RowScope.() -> Unit
 ) {
     val colors = VetraTheme.colors
-    val shapes = VetraTheme.shapes
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val borderColor = if (enabled) colors.border else colors.borderSubtle
-    val contentColor = if (enabled) colors.brand else colors.textDisabled
-
-    Box(
-        modifier = modifier
-            .defaultMinSize(minWidth = ButtonMinWidth, minHeight = ButtonHeight)
-            .clip(shapes.sm)
-            .background(Color.Transparent)
-            .then(
-                // Border implementation
-                Modifier
-                    .padding(1.dp)
-                    .background(borderColor, shapes.sm)
-                    .padding(1.dp)
-                    .background(colors.canvasElevated, shapes.sm)
-            )
-            .clickable(
-                enabled = enabled,
-                onClick = onClick,
-                role = Role.Button,
-                interactionSource = interactionSource,
-                indication = vetraPressIndication()
-            )
-            .padding(
-                horizontal = ButtonHorizontalPadding - 2.dp,
-                vertical = ButtonVerticalPadding - 2.dp
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CompositionLocalProvider(
-                LocalContentColor provides contentColor,
-                LocalTextStyle provides VetraTheme.typography.labelLg.copy(color = contentColor)
-            ) {
-                content()
-            }
-        }
-    }
+    BaseButton(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        style = ButtonStyle(
+            backgroundColor = Color.Transparent,
+            contentColor = if (enabled) colors.brand else colors.textDisabled,
+            hasShadow = false,
+            hasBorder = true
+        ),
+        content = content
+    )
 }
 
 /**
@@ -251,38 +248,18 @@ fun VetraGhostButton(
     content: @Composable RowScope.() -> Unit
 ) {
     val colors = VetraTheme.colors
-    val shapes = VetraTheme.shapes
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val contentColor = if (enabled) colors.brand else colors.textDisabled
-
-    Box(
-        modifier = modifier
-            .defaultMinSize(minWidth = ButtonMinWidth, minHeight = ButtonHeight)
-            .clip(shapes.sm)
-            .background(Color.Transparent)
-            .clickable(
-                enabled = enabled,
-                onClick = onClick,
-                role = Role.Button,
-                interactionSource = interactionSource,
-                indication = vetraPressIndication()
-            )
-            .padding(horizontal = ButtonHorizontalPadding, vertical = ButtonVerticalPadding),
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CompositionLocalProvider(
-                LocalContentColor provides contentColor,
-                LocalTextStyle provides VetraTheme.typography.labelLg.copy(color = contentColor)
-            ) {
-                content()
-            }
-        }
-    }
+    BaseButton(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        style = ButtonStyle(
+            backgroundColor = Color.Transparent,
+            contentColor = if (enabled) colors.brand else colors.textDisabled,
+            hasShadow = false,
+            hasBorder = false
+        ),
+        content = content
+    )
 }
 
 /**
@@ -304,42 +281,18 @@ fun VetraDangerButton(
     content: @Composable RowScope.() -> Unit
 ) {
     val colors = VetraTheme.colors
-    val shapes = VetraTheme.shapes
-    val shadows = VetraTheme.shadows
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val backgroundColor = if (enabled) colors.danger else colors.dangerDisabled
-    val contentColor = if (enabled) colors.onDanger else colors.onDangerDisabled
-    val shadow = if (enabled) shadows.sm else shadows.none
-
-    Box(
-        modifier = modifier
-            .defaultMinSize(minWidth = ButtonMinWidth, minHeight = ButtonHeight)
-            .vetraShadow(elevation = shadow, shape = shapes.sm)
-            .clip(shapes.sm)
-            .background(backgroundColor)
-            .clickable(
-                onClick = onClick,
-                enabled = enabled,
-                role = Role.Button,
-                interactionSource = interactionSource,
-                indication = vetraPressIndication()
-            )
-            .padding(horizontal = ButtonHorizontalPadding, vertical = ButtonVerticalPadding),
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CompositionLocalProvider(
-                LocalContentColor provides contentColor,
-                LocalTextStyle provides VetraTheme.typography.labelLg.copy(color = contentColor)
-            ) {
-                content()
-            }
-        }
-    }
+    BaseButton(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        style = ButtonStyle(
+            backgroundColor = if (enabled) colors.danger else colors.dangerDisabled,
+            contentColor = if (enabled) colors.onDanger else colors.onDangerDisabled,
+            hasShadow = true,
+            hasBorder = false
+        ),
+        content = content
+    )
 }
 
 // ============================================================================
