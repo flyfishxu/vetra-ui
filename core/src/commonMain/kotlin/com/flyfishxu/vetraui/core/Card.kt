@@ -44,6 +44,68 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
  */
 
 /**
+ * Card style configuration for different card variants
+ */
+private data class CardStyle(
+    val backgroundColor: Color,
+    val hasShadow: Boolean,
+    val shadowElevation: com.flyfishxu.vetraui.core.theme.VetraShadowElevation?,
+    val hasBorder: Boolean,
+    val borderColor: Color,
+    val contentPadding: androidx.compose.ui.unit.Dp
+)
+
+/**
+ * Internal base card implementation shared by all card variants.
+ * Eliminates code duplication and improves maintainability.
+ */
+@Composable
+private fun BaseCard(
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+    style: CardStyle,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    val shapes = VetraTheme.shapes
+    val interactionSource = remember { MutableInteractionSource() }
+
+    val baseModifier = modifier.clip(shapes.md)
+
+    val modifierWithShadow = if (style.hasShadow && style.shadowElevation != null) {
+        baseModifier.vetraShadow(elevation = style.shadowElevation, shape = shapes.md)
+    } else {
+        baseModifier
+    }
+
+    val modifierWithBorder = if (style.hasBorder) {
+        modifierWithShadow
+            .background(style.borderColor)
+            .padding(1.dp)
+            .clip(shapes.md)
+            .background(style.backgroundColor, shapes.md)
+    } else {
+        modifierWithShadow
+            .background(style.backgroundColor)
+    }
+
+    val finalModifier = if (onClick != null) {
+        modifierWithBorder.clickable(
+            onClick = onClick,
+            role = Role.Button,
+            interactionSource = interactionSource,
+            indication = vetraPressIndication()
+        )
+    } else {
+        modifierWithBorder
+    }
+
+    Column(
+        modifier = finalModifier.padding(style.contentPadding),
+        content = content
+    )
+}
+
+/**
  * Standard Card - Elevated card with soft shadow
  *
  * The default card variant. Use for containing related content
@@ -60,32 +122,18 @@ fun VetraCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     val colors = VetraTheme.colors
-    val shapes = VetraTheme.shapes
     val shadows = VetraTheme.shadows
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val baseModifier = modifier
-        .vetraShadow(elevation = shadows.sm, shape = shapes.md)
-        .clip(shapes.md)
-        // Add subtle border for better definition
-        .background(colors.borderSubtle)
-        .padding(1.dp)
-        .clip(shapes.md)
-        .background(colors.canvasElevated)
-
-    val finalModifier = if (onClick != null) {
-        baseModifier.clickable(
-            onClick = onClick,
-            role = Role.Button,
-            interactionSource = interactionSource,
-            indication = vetraPressIndication()
-        )
-    } else {
-        baseModifier
-    }
-
-    Column(
-        modifier = finalModifier.padding(15.dp), // Reduced by 1dp to account for border
+    BaseCard(
+        modifier = modifier,
+        onClick = onClick,
+        style = CardStyle(
+            backgroundColor = colors.canvasElevated,
+            hasShadow = true,
+            shadowElevation = shadows.sm,
+            hasBorder = true,
+            borderColor = colors.borderSubtle,
+            contentPadding = 15.dp
+        ),
         content = content
     )
 }
@@ -107,26 +155,17 @@ fun VetraFlatCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     val colors = VetraTheme.colors
-    val shapes = VetraTheme.shapes
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val baseModifier = modifier
-        .clip(shapes.md)
-        .background(colors.canvasSubtle)
-
-    val finalModifier = if (onClick != null) {
-        baseModifier.clickable(
-            onClick = onClick,
-            role = Role.Button,
-            interactionSource = interactionSource,
-            indication = vetraPressIndication()
-        )
-    } else {
-        baseModifier
-    }
-
-    Column(
-        modifier = finalModifier.padding(16.dp),
+    BaseCard(
+        modifier = modifier,
+        onClick = onClick,
+        style = CardStyle(
+            backgroundColor = colors.canvasSubtle,
+            hasShadow = false,
+            shadowElevation = null,
+            hasBorder = false,
+            borderColor = Color.Transparent,
+            contentPadding = 16.dp
+        ),
         content = content
     )
 }
@@ -148,28 +187,18 @@ fun VetraElevatedCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     val colors = VetraTheme.colors
-    val shapes = VetraTheme.shapes
     val shadows = VetraTheme.shadows
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val baseModifier = modifier
-        .vetraShadow(elevation = shadows.xl, shape = shapes.md)
-        .clip(shapes.md)
-        .background(colors.canvasElevated)
-
-    val finalModifier = if (onClick != null) {
-        baseModifier.clickable(
-            onClick = onClick,
-            role = Role.Button,
-            interactionSource = interactionSource,
-            indication = vetraPressIndication()
-        )
-    } else {
-        baseModifier
-    }
-
-    Column(
-        modifier = finalModifier.padding(16.dp),
+    BaseCard(
+        modifier = modifier,
+        onClick = onClick,
+        style = CardStyle(
+            backgroundColor = colors.canvasElevated,
+            hasShadow = true,
+            shadowElevation = shadows.xl,
+            hasBorder = false,
+            borderColor = Color.Transparent,
+            contentPadding = 16.dp
+        ),
         content = content
     )
 }
@@ -191,35 +220,17 @@ fun VetraOutlinedCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     val colors = VetraTheme.colors
-    val shapes = VetraTheme.shapes
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val baseModifier = modifier
-        .clip(shapes.md)
-        .background(Color.Transparent)
-        .then(
-            // Border implementation
-            Modifier
-                .padding(1.dp)
-                .background(colors.border, shapes.md)
-                .padding(1.dp)
-                .clip(shapes.md)
-                .background(colors.canvasElevated, shapes.md)
-        )
-
-    val finalModifier = if (onClick != null) {
-        baseModifier.clickable(
-            onClick = onClick,
-            role = Role.Button,
-            interactionSource = interactionSource,
-            indication = vetraPressIndication()
-        )
-    } else {
-        baseModifier
-    }
-
-    Column(
-        modifier = finalModifier.padding(14.dp), // Reduced to account for border
+    BaseCard(
+        modifier = modifier,
+        onClick = onClick,
+        style = CardStyle(
+            backgroundColor = colors.canvasElevated,
+            hasShadow = false,
+            shadowElevation = null,
+            hasBorder = true,
+            borderColor = colors.border,
+            contentPadding = 14.dp
+        ),
         content = content
     )
 }
@@ -240,26 +251,17 @@ fun VetraBrandCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     val colors = VetraTheme.colors
-    val shapes = VetraTheme.shapes
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val baseModifier = modifier
-        .clip(shapes.md)
-        .background(colors.brandSubtle)
-
-    val finalModifier = if (onClick != null) {
-        baseModifier.clickable(
-            onClick = onClick,
-            role = Role.Button,
-            interactionSource = interactionSource,
-            indication = vetraPressIndication()
-        )
-    } else {
-        baseModifier
-    }
-
-    Column(
-        modifier = finalModifier.padding(16.dp),
+    BaseCard(
+        modifier = modifier,
+        onClick = onClick,
+        style = CardStyle(
+            backgroundColor = colors.brandSubtle,
+            hasShadow = false,
+            shadowElevation = null,
+            hasBorder = false,
+            borderColor = Color.Transparent,
+            contentPadding = 16.dp
+        ),
         content = content
     )
 }

@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -121,19 +122,30 @@ fun VetraTextField(
         }
     }
 
-    val shouldFloatLabel = isFocused || value.isNotEmpty()
-
-    // Colors
-    val accentColor = when {
-        isError -> colors.danger
-        isFocused -> colors.brand
-        else -> colors.border
+    // Use derivedStateOf to avoid unnecessary recompositions
+    val shouldFloatLabel by remember {
+        derivedStateOf { isFocused || value.isNotEmpty() }
     }
 
-    val textColor = if (enabled) colors.textPrimary else colors.textDisabled
-    val labelColor = if (isError) colors.danger else colors.textSecondary
+    // Colors - memoized to avoid recalculation
+    val accentColor = remember(isError, isFocused, colors) {
+        when {
+            isError -> colors.danger
+            isFocused -> colors.brand
+            else -> colors.border
+        }
+    }
+
+    val textColor = remember(enabled, colors) {
+        if (enabled) colors.textPrimary else colors.textDisabled
+    }
+    val labelColor = remember(isError, colors) {
+        if (isError) colors.danger else colors.textSecondary
+    }
     val placeholderColor = colors.textTertiary
-    val backgroundColor = if (enabled) colors.canvasElevated else colors.canvasSubtle
+    val backgroundColor = remember(enabled, colors) {
+        if (enabled) colors.canvasElevated else colors.canvasSubtle
+    }
 
     // Animations
     val accentLineColor by animateColorAsState(
