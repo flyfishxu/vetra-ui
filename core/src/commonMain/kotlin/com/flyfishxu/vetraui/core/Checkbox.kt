@@ -114,18 +114,38 @@ fun VetraCheckbox(
         label = "checkboxCheckmarkProgress"
     )
 
+    // Icon type transition: 0f = indeterminate line, 1f = checkmark
+    // This enables smooth animation when transitioning from indeterminate to checked
+    val iconTypeTransition by animateFloatAsState(
+        targetValue = when {
+            indeterminate -> 0f  // Show indeterminate line
+            checked -> 1f       // Show checkmark
+            else -> 1f          // Default to checkmark (when unchecked with no icon)
+        },
+        animationSpec = tween(durationMillis = CheckboxAnimationDuration),
+        label = "checkboxIconTypeTransition"
+    )
+
     val checkboxShape = VetraTheme.shapes.xs
 
     Box(
         modifier = modifier
             .size(CheckboxTouchTarget)
             .clip(checkboxShape)
-            .clickable(
-                onClick = { onCheckedChange?.invoke(!checked) },
-                enabled = enabled && onCheckedChange != null,
-                role = Role.Checkbox,
-                interactionSource = interactionSource,
-                indication = null
+            .then(
+                if (onCheckedChange != null) {
+                    Modifier.clickable(
+                        onClick = {
+                            onCheckedChange.invoke(if (indeterminate) true else !checked)
+                        },
+                        enabled = enabled,
+                        role = Role.Checkbox,
+                        interactionSource = interactionSource,
+                        indication = null
+                    )
+                } else {
+                    Modifier
+                }
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -147,15 +167,21 @@ fun VetraCheckbox(
                 )
                 .drawBehind {
                     if (checkmarkProgress > 0f) {
-                        if (indeterminate) {
+                        // Smoothly transition between indeterminate line and checkmark
+                        val indeterminateAlpha = (1f - iconTypeTransition) * checkmarkProgress
+                        val checkmarkAlpha = iconTypeTransition * checkmarkProgress
+
+                        if (indeterminateAlpha > 0f) {
                             drawIndeterminateLine(
                                 color = checkmarkColor,
-                                progress = checkmarkProgress
+                                progress = indeterminateAlpha
                             )
-                        } else {
+                        }
+
+                        if (checkmarkAlpha > 0f) {
                             drawCheckmark(
                                 color = checkmarkColor,
-                                progress = checkmarkProgress
+                                progress = checkmarkAlpha
                             )
                         }
                     }
@@ -191,19 +217,23 @@ fun VetraCheckboxWithLabel(
         modifier = modifier
             .clip(VetraTheme.shapes.sm)
             .clickable(
-                onClick = { onCheckedChange?.invoke(!checked) },
+                onClick = {
+                    // When indeterminate, clicking should always check (select all)
+                    // Otherwise, toggle the checked state
+                    onCheckedChange?.invoke(if (indeterminate) true else !checked)
+                },
                 enabled = enabled && onCheckedChange != null,
                 role = Role.Checkbox,
                 interactionSource = interactionSource,
                 indication = null
             )
             .padding(vertical = 8.dp, horizontal = 4.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         VetraCheckbox(
             checked = checked,
-            onCheckedChange = { onCheckedChange?.invoke(!checked) },
+            onCheckedChange = null,  // Handled by Row's clickable
             enabled = enabled,
             indeterminate = indeterminate
         )
@@ -377,16 +407,13 @@ private fun VetraCheckboxPreview() {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 VetraCheckboxWithLabel(
                     checked = allChecked,
-                    onCheckedChange = {
-                        if (allChecked || someChecked) {
-                            option1 = false
-                            option2 = false
-                            option3 = false
-                        } else {
-                            option1 = true
-                            option2 = true
-                            option3 = true
-                        }
+                    onCheckedChange = { newChecked ->
+                        // When indeterminate, clicking will always pass true (select all)
+                        // When checked, clicking will pass false (deselect all)
+                        // When unchecked, clicking will pass true (select all)
+                        option1 = newChecked
+                        option2 = newChecked
+                        option3 = newChecked
                     },
                     label = "Select All",
                     indeterminate = someChecked

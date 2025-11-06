@@ -334,16 +334,13 @@ fun InputsScreen() {
 
                     VetraCheckboxWithLabel(
                         checked = allChecked,
-                        onCheckedChange = {
-                            if (allChecked || someChecked) {
-                                option1 = false
-                                option2 = false
-                                option3 = false
-                            } else {
-                                option1 = true
-                                option2 = true
-                                option3 = true
-                            }
+                        onCheckedChange = { newChecked ->
+                            // When indeterminate, clicking will always pass true (select all)
+                            // When checked, clicking will pass false (deselect all)
+                            // When unchecked, clicking will pass true (select all)
+                            option1 = newChecked
+                            option2 = newChecked
+                            option3 = newChecked
                         },
                         label = "Select All Features",
                         indeterminate = someChecked

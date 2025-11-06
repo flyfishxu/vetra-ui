@@ -60,7 +60,7 @@ private val SwitchAnimationDuration = 250
 @Composable
 fun VetraSwitch(
     checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
+    onCheckedChange: ((Boolean) -> Unit)?,
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {
@@ -110,12 +110,18 @@ fun VetraSwitch(
             )
             .clip(switchShape)
             .background(backgroundColor)
-            .clickable(
-                onClick = { onCheckedChange(!checked) },
-                enabled = enabled,
-                role = Role.Switch,
-                interactionSource = interactionSource,
-                indication = null
+            .then(
+                if (onCheckedChange != null) {
+                    Modifier.clickable(
+                        onClick = { onCheckedChange(!checked) },
+                        enabled = enabled,
+                        role = Role.Switch,
+                        interactionSource = interactionSource,
+                        indication = null
+                    )
+                } else {
+                    Modifier
+                }
             ),
         contentAlignment = Alignment.CenterStart
     ) {
@@ -170,7 +176,7 @@ fun VetraSwitchWithLabel(
     ) {
         VetraSwitch(
             checked = checked,
-            onCheckedChange = { onCheckedChange(!checked) },  // Handled by Row's clickable
+            onCheckedChange = null,  // Handled by Row's clickable
             enabled = enabled
         )
 

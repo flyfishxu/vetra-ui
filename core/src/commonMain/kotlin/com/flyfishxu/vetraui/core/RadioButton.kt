@@ -100,12 +100,18 @@ fun VetraRadioButton(
         modifier = modifier
             .size(RadioButtonTouchTarget)
             .clip(CircleShape)
-            .clickable(
-                onClick = onClick ?: {},
-                enabled = enabled && onClick != null,
-                role = Role.RadioButton,
-                interactionSource = interactionSource,
-                indication = null
+            .then(
+                if (onClick != null) {
+                    Modifier.clickable(
+                        onClick = onClick,
+                        enabled = enabled,
+                        role = Role.RadioButton,
+                        interactionSource = interactionSource,
+                        indication = null
+                    )
+                } else {
+                    Modifier
+                }
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -171,7 +177,7 @@ fun VetraRadioButtonWithLabel(
                 indication = null
             )
             .padding(vertical = 8.dp, horizontal = 4.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         VetraRadioButton(
