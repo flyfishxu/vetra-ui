@@ -98,65 +98,66 @@ fun MenuScreen() {
 
         // Menu Button
         item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(
-                        "Menu Button",
-                        style = typography.headingLg.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "A button that opens a dropdown menu when clicked",
-                        style = typography.bodyMd.copy(color = colors.textSecondary)
-                    )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    "Menu Button",
+                    style = typography.headingLg.copy(color = colors.textPrimary)
+                )
+                Text(
+                    "A button that opens a dropdown menu when clicked",
+                    style = typography.bodyMd.copy(color = colors.textSecondary)
+                )
 
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        modifier = Modifier.fillMaxWidth()
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    VetraMenuButton(
+                        text = "File",
+                        leadingIcon = Icons.Outlined.Description
                     ) {
-                        VetraMenuButton(
-                            text = "File",
-                            leadingIcon = Icons.Outlined.Description
-                        ) {
-                            VetraMenuItem(
-                                text = "New File",
-                                onClick = { selectedAction = "New File" },
-                                leadingIcon = Icons.Outlined.Add
-                            )
-                            VetraMenuItem(
-                                text = "Open",
-                                onClick = { selectedAction = "Open" },
-                                leadingIcon = Icons.Outlined.FolderOpen
-                            )
-                            VetraMenuItem(
-                                text = "Save",
-                                onClick = { selectedAction = "Save" },
-                                leadingIcon = Icons.Outlined.Save
-                            )
-                            VetraMenuDivider()
-                            VetraMenuItem(
-                                text = "Export",
-                                onClick = { selectedAction = "Export" },
-                                leadingIcon = Icons.Outlined.Upload
-                            )
-                        }
+                        VetraMenuItem(
+                            text = "New File",
+                            onClick = { selectedAction = "New File" },
+                            leadingIcon = Icons.Outlined.Add
+                        )
+                        VetraMenuItem(
+                            text = "Open",
+                            onClick = { selectedAction = "Open" },
+                            leadingIcon = Icons.Outlined.FolderOpen
+                        )
+                        VetraMenuItem(
+                            text = "Save",
+                            onClick = { selectedAction = "Save" },
+                            leadingIcon = Icons.Outlined.Save
+                        )
+                        VetraMenuDivider()
+                        VetraMenuItem(
+                            text = "Export",
+                            onClick = { selectedAction = "Export" },
+                            leadingIcon = Icons.Outlined.Upload
+                        )
+                    }
 
-                        VetraMenuButton(text = "Edit") {
-                            VetraMenuItem(
-                                text = "Cut",
-                                onClick = { selectedAction = "Cut" },
-                                leadingIcon = Icons.Outlined.ContentCut
-                            )
-                            VetraMenuItem(
-                                text = "Copy",
-                                onClick = { selectedAction = "Copy" },
-                                leadingIcon = Icons.Outlined.ContentCopy
-                            )
-                            VetraMenuItem(
-                                text = "Paste",
-                                onClick = { selectedAction = "Paste" },
-                                leadingIcon = Icons.Outlined.ContentPaste
-                            )
-                        }
+                    VetraMenuButton(text = "Edit") {
+                        VetraMenuItem(
+                            text = "Cut",
+                            onClick = { selectedAction = "Cut" },
+                            leadingIcon = Icons.Outlined.ContentCut
+                        )
+                        VetraMenuItem(
+                            text = "Copy",
+                            onClick = { selectedAction = "Copy" },
+                            leadingIcon = Icons.Outlined.ContentCopy
+                        )
+                        VetraMenuItem(
+                            text = "Paste",
+                            onClick = { selectedAction = "Paste" },
+                            leadingIcon = Icons.Outlined.ContentPaste
+                        )
                     }
                 }
             }
@@ -164,98 +165,99 @@ fun MenuScreen() {
 
         // Icon Menu Button
         item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(
-                        "Icon Menu Button",
-                        style = typography.headingLg.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "An icon button that opens a dropdown menu",
-                        style = typography.bodyMd.copy(color = colors.textSecondary)
-                    )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    "Icon Menu Button",
+                    style = typography.headingLg.copy(color = colors.textPrimary)
+                )
+                Text(
+                    "An icon button that opens a dropdown menu",
+                    style = typography.bodyMd.copy(color = colors.textSecondary)
+                )
 
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    VetraIconMenuButton(
+                        icon = Icons.Filled.MoreVert,
+                        contentDescription = "More options"
                     ) {
-                        VetraIconMenuButton(
-                            icon = Icons.Filled.MoreVert,
-                            contentDescription = "More options"
-                        ) {
-                            VetraMenuItem(
-                                text = "Settings",
-                                onClick = { selectedAction = "Settings" },
-                                leadingIcon = Icons.Outlined.Settings
-                            )
-                            VetraMenuItem(
-                                text = "Profile",
-                                onClick = { selectedAction = "Profile" },
-                                leadingIcon = Icons.Outlined.Person
-                            )
-                            VetraMenuDivider()
-                            VetraMenuItem(
-                                text = "Logout",
-                                onClick = { selectedAction = "Logout" },
-                                leadingIcon = Icons.AutoMirrored.Outlined.Logout,
-                                contentColor = colors.danger
-                            )
-                        }
+                        VetraMenuItem(
+                            text = "Settings",
+                            onClick = { selectedAction = "Settings" },
+                            leadingIcon = Icons.Outlined.Settings
+                        )
+                        VetraMenuItem(
+                            text = "Profile",
+                            onClick = { selectedAction = "Profile" },
+                            leadingIcon = Icons.Outlined.Person
+                        )
+                        VetraMenuDivider()
+                        VetraMenuItem(
+                            text = "Logout",
+                            onClick = { selectedAction = "Logout" },
+                            leadingIcon = Icons.AutoMirrored.Outlined.Logout,
+                            contentColor = colors.danger
+                        )
+                    }
 
-                        VetraIconMenuButton(
-                            icon = Icons.Filled.Share,
-                            contentDescription = "Share"
-                        ) {
-                            VetraMenuLabel("Share to")
-                            VetraMenuItem(
-                                text = "Email",
-                                onClick = { selectedAction = "Share via Email" },
-                                leadingIcon = Icons.Outlined.Email
-                            )
-                            VetraMenuItem(
-                                text = "Link",
-                                onClick = { selectedAction = "Copy Link" },
-                                leadingIcon = Icons.Outlined.Link
-                            )
-                            VetraMenuItem(
-                                text = "Social Media",
-                                onClick = { selectedAction = "Share to Social" },
-                                leadingIcon = Icons.Outlined.Share
-                            )
-                        }
+                    VetraIconMenuButton(
+                        icon = Icons.Filled.Share,
+                        contentDescription = "Share"
+                    ) {
+                        VetraMenuLabel("Share to")
+                        VetraMenuItem(
+                            text = "Email",
+                            onClick = { selectedAction = "Share via Email" },
+                            leadingIcon = Icons.Outlined.Email
+                        )
+                        VetraMenuItem(
+                            text = "Link",
+                            onClick = { selectedAction = "Copy Link" },
+                            leadingIcon = Icons.Outlined.Link
+                        )
+                        VetraMenuItem(
+                            text = "Social Media",
+                            onClick = { selectedAction = "Share to Social" },
+                            leadingIcon = Icons.Outlined.Share
+                        )
+                    }
 
-                        VetraIconMenuButton(
-                            icon = Icons.Filled.FilterList,
-                            contentDescription = "Filter"
-                        ) {
-                            VetraMenuLabel("Sort by")
-                            VetraMenuItem(
-                                text = "Name",
-                                onClick = { selectedAction = "Sort by Name" },
-                                trailingIcon = Icons.Outlined.ArrowUpward
-                            )
-                            VetraMenuItem(
-                                text = "Date",
-                                onClick = { selectedAction = "Sort by Date" },
-                                trailingIcon = Icons.Outlined.ArrowUpward
-                            )
-                            VetraMenuItem(
-                                text = "Size",
-                                onClick = { selectedAction = "Sort by Size" },
-                                trailingIcon = Icons.Outlined.ArrowUpward
-                            )
-                            VetraMenuDivider()
-                            VetraMenuLabel("View")
-                            VetraMenuItem(
-                                text = "Grid",
-                                onClick = { selectedAction = "Grid View" },
-                                leadingIcon = Icons.Outlined.GridView
-                            )
-                            VetraMenuItem(
-                                text = "List",
-                                onClick = { selectedAction = "List View" },
-                                leadingIcon = Icons.AutoMirrored.Outlined.List
-                            )
-                        }
+                    VetraIconMenuButton(
+                        icon = Icons.Filled.FilterList,
+                        contentDescription = "Filter"
+                    ) {
+                        VetraMenuLabel("Sort by")
+                        VetraMenuItem(
+                            text = "Name",
+                            onClick = { selectedAction = "Sort by Name" },
+                            trailingIcon = Icons.Outlined.ArrowUpward
+                        )
+                        VetraMenuItem(
+                            text = "Date",
+                            onClick = { selectedAction = "Sort by Date" },
+                            trailingIcon = Icons.Outlined.ArrowUpward
+                        )
+                        VetraMenuItem(
+                            text = "Size",
+                            onClick = { selectedAction = "Sort by Size" },
+                            trailingIcon = Icons.Outlined.ArrowUpward
+                        )
+                        VetraMenuDivider()
+                        VetraMenuLabel("View")
+                        VetraMenuItem(
+                            text = "Grid",
+                            onClick = { selectedAction = "Grid View" },
+                            leadingIcon = Icons.Outlined.GridView
+                        )
+                        VetraMenuItem(
+                            text = "List",
+                            onClick = { selectedAction = "List View" },
+                            leadingIcon = Icons.AutoMirrored.Outlined.List
+                        )
                     }
                 }
             }
@@ -263,75 +265,76 @@ fun MenuScreen() {
 
         // Manual Dropdown Menu
         item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(
-                        "Custom Dropdown Menu",
-                        style = typography.headingLg.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "Manually controlled dropdown menu with custom trigger",
-                        style = typography.bodyMd.copy(color = colors.textSecondary)
-                    )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    "Custom Dropdown Menu",
+                    style = typography.headingLg.copy(color = colors.textPrimary)
+                )
+                Text(
+                    "Manually controlled dropdown menu with custom trigger",
+                    style = typography.bodyMd.copy(color = colors.textSecondary)
+                )
 
-                    var expanded by remember { mutableStateOf(false) }
+                var expanded by remember { mutableStateOf(false) }
 
-                    Box {
-                        VetraButton(
-                            onClick = { expanded = !expanded }
+                Box {
+                    VetraButton(
+                        onClick = { expanded = !expanded }
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text("Choose Action")
-                                Icon(
-                                    imageVector = if (expanded) Icons.Filled.ArrowDropUp else Icons.Filled.ArrowDropDown,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(20.dp)
-                                )
-                            }
-                        }
-
-                        VetraDropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false }
-                        ) {
-                            VetraMenuItem(
-                                text = "Download",
-                                onClick = {
-                                    selectedAction = "Download"
-                                    expanded = false
-                                },
-                                leadingIcon = Icons.Outlined.Download
-                            )
-                            VetraMenuItem(
-                                text = "Print",
-                                onClick = {
-                                    selectedAction = "Print"
-                                    expanded = false
-                                },
-                                leadingIcon = Icons.Outlined.Print
-                            )
-                            VetraMenuItem(
-                                text = "Archive",
-                                onClick = {
-                                    selectedAction = "Archive"
-                                    expanded = false
-                                },
-                                leadingIcon = Icons.Outlined.Archive
-                            )
-                            VetraMenuDivider()
-                            VetraMenuItem(
-                                text = "Delete",
-                                onClick = {
-                                    selectedAction = "Delete"
-                                    expanded = false
-                                },
-                                leadingIcon = Icons.Outlined.Delete,
-                                contentColor = colors.danger
+                            Text("Choose Action")
+                            Icon(
+                                imageVector = if (expanded) Icons.Filled.ArrowDropUp else Icons.Filled.ArrowDropDown,
+                                contentDescription = null,
+                                modifier = Modifier.size(20.dp)
                             )
                         }
+                    }
+
+                    VetraDropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        VetraMenuItem(
+                            text = "Download",
+                            onClick = {
+                                selectedAction = "Download"
+                                expanded = false
+                            },
+                            leadingIcon = Icons.Outlined.Download
+                        )
+                        VetraMenuItem(
+                            text = "Print",
+                            onClick = {
+                                selectedAction = "Print"
+                                expanded = false
+                            },
+                            leadingIcon = Icons.Outlined.Print
+                        )
+                        VetraMenuItem(
+                            text = "Archive",
+                            onClick = {
+                                selectedAction = "Archive"
+                                expanded = false
+                            },
+                            leadingIcon = Icons.Outlined.Archive
+                        )
+                        VetraMenuDivider()
+                        VetraMenuItem(
+                            text = "Delete",
+                            onClick = {
+                                selectedAction = "Delete"
+                                expanded = false
+                            },
+                            leadingIcon = Icons.Outlined.Delete,
+                            contentColor = colors.danger
+                        )
                     }
                 }
             }
@@ -339,89 +342,90 @@ fun MenuScreen() {
 
         // Context Menu Demo
         item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(
-                        "Context Menu",
-                        style = typography.headingLg.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "Right-click or long-press to open context menu",
-                        style = typography.bodyMd.copy(color = colors.textSecondary)
-                    )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    "Context Menu",
+                    style = typography.headingLg.copy(color = colors.textPrimary)
+                )
+                Text(
+                    "Right-click or long-press to open context menu",
+                    style = typography.bodyMd.copy(color = colors.textSecondary)
+                )
 
-                    var contextMenuExpanded by remember { mutableStateOf(false) }
+                var contextMenuExpanded by remember { mutableStateOf(false) }
 
-                    Box {
-                        VetraCard(
-                            onClick = { contextMenuExpanded = true },
-                            modifier = Modifier.fillMaxWidth()
+                Box {
+                    VetraCard(
+                        onClick = { contextMenuExpanded = true },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Outlined.Image,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(48.dp),
-                                    tint = colors.brand
+                            Icon(
+                                imageVector = Icons.Outlined.Image,
+                                contentDescription = null,
+                                modifier = Modifier.size(48.dp),
+                                tint = colors.brand
+                            )
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    "Sample Image.jpg",
+                                    style = typography.bodyLg.copy(color = colors.textPrimary)
                                 )
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text(
-                                        "Sample Image.jpg",
-                                        style = typography.bodyLg.copy(color = colors.textPrimary)
-                                    )
-                                    Text(
-                                        "Click to open context menu",
-                                        style = typography.bodySm.copy(color = colors.textSecondary)
-                                    )
-                                }
+                                Text(
+                                    "Click to open context menu",
+                                    style = typography.bodySm.copy(color = colors.textSecondary)
+                                )
                             }
                         }
+                    }
 
-                        VetraContextMenu(
-                            expanded = contextMenuExpanded,
-                            onDismissRequest = { contextMenuExpanded = false }
-                        ) {
-                            VetraMenuItem(
-                                text = "Open",
-                                onClick = {
-                                    selectedAction = "Open Image"
-                                    contextMenuExpanded = false
-                                },
-                                leadingIcon = Icons.AutoMirrored.Outlined.OpenInNew
-                            )
-                            VetraMenuItem(
-                                text = "Rename",
-                                onClick = {
-                                    selectedAction = "Rename Image"
-                                    contextMenuExpanded = false
-                                },
-                                leadingIcon = Icons.Outlined.Edit
-                            )
-                            VetraMenuItem(
-                                text = "Copy",
-                                onClick = {
-                                    selectedAction = "Copy Image"
-                                    contextMenuExpanded = false
-                                },
-                                leadingIcon = Icons.Outlined.ContentCopy
-                            )
-                            VetraMenuDivider()
-                            VetraMenuItem(
-                                text = "Move to Trash",
-                                onClick = {
-                                    selectedAction = "Delete Image"
-                                    contextMenuExpanded = false
-                                },
-                                leadingIcon = Icons.Outlined.Delete,
-                                contentColor = colors.danger
-                            )
-                        }
+                    VetraContextMenu(
+                        expanded = contextMenuExpanded,
+                        onDismissRequest = { contextMenuExpanded = false }
+                    ) {
+                        VetraMenuItem(
+                            text = "Open",
+                            onClick = {
+                                selectedAction = "Open Image"
+                                contextMenuExpanded = false
+                            },
+                            leadingIcon = Icons.AutoMirrored.Outlined.OpenInNew
+                        )
+                        VetraMenuItem(
+                            text = "Rename",
+                            onClick = {
+                                selectedAction = "Rename Image"
+                                contextMenuExpanded = false
+                            },
+                            leadingIcon = Icons.Outlined.Edit
+                        )
+                        VetraMenuItem(
+                            text = "Copy",
+                            onClick = {
+                                selectedAction = "Copy Image"
+                                contextMenuExpanded = false
+                            },
+                            leadingIcon = Icons.Outlined.ContentCopy
+                        )
+                        VetraMenuDivider()
+                        VetraMenuItem(
+                            text = "Move to Trash",
+                            onClick = {
+                                selectedAction = "Delete Image"
+                                contextMenuExpanded = false
+                            },
+                            leadingIcon = Icons.Outlined.Delete,
+                            contentColor = colors.danger
+                        )
                     }
                 }
             }
@@ -429,36 +433,37 @@ fun MenuScreen() {
 
         // Disabled Items
         item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(
-                        "Menu with Disabled Items",
-                        style = typography.headingLg.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "Some menu items can be disabled",
-                        style = typography.bodyMd.copy(color = colors.textSecondary)
-                    )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    "Menu with Disabled Items",
+                    style = typography.headingLg.copy(color = colors.textPrimary)
+                )
+                Text(
+                    "Some menu items can be disabled",
+                    style = typography.bodyMd.copy(color = colors.textSecondary)
+                )
 
-                    VetraMenuButton(text = "Options") {
-                        VetraMenuItem(
-                            text = "Enabled Item",
-                            onClick = { selectedAction = "Enabled Item" },
-                            leadingIcon = Icons.Outlined.CheckCircle
-                        )
-                        VetraMenuItem(
-                            text = "Disabled Item",
-                            onClick = { selectedAction = "This should not trigger" },
-                            leadingIcon = Icons.Outlined.Block,
-                            enabled = false
-                        )
-                        VetraMenuDivider()
-                        VetraMenuItem(
-                            text = "Another Enabled",
-                            onClick = { selectedAction = "Another Enabled" },
-                            leadingIcon = Icons.Outlined.CheckCircle
-                        )
-                    }
+                VetraMenuButton(text = "Options") {
+                    VetraMenuItem(
+                        text = "Enabled Item",
+                        onClick = { selectedAction = "Enabled Item" },
+                        leadingIcon = Icons.Outlined.CheckCircle
+                    )
+                    VetraMenuItem(
+                        text = "Disabled Item",
+                        onClick = { selectedAction = "This should not trigger" },
+                        leadingIcon = Icons.Outlined.Block,
+                        enabled = false
+                    )
+                    VetraMenuDivider()
+                    VetraMenuItem(
+                        text = "Another Enabled",
+                        onClick = { selectedAction = "Another Enabled" },
+                        leadingIcon = Icons.Outlined.CheckCircle
+                    )
                 }
             }
         }

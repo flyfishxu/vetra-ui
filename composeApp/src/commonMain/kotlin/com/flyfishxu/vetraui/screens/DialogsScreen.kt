@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.flyfishxu.vetraui.core.VetraAlertDialog
 import com.flyfishxu.vetraui.core.VetraButton
-import com.flyfishxu.vetraui.core.VetraCard
 import com.flyfishxu.vetraui.core.VetraCustomDialog
 import com.flyfishxu.vetraui.core.VetraDangerButton
 import com.flyfishxu.vetraui.core.VetraDialog
@@ -367,14 +366,15 @@ private fun DemoSection(
     val colors = VetraTheme.colors
     val typography = VetraTheme.typography
 
-    VetraCard(modifier = Modifier.fillMaxWidth()) {
-        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            Text(
-                text = title,
-                style = typography.headingMd.copy(color = colors.textPrimary)
-            )
-            content()
-        }
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Text(
+            text = title,
+            style = typography.headingMd.copy(color = colors.textPrimary)
+        )
+        content()
     }
 }
 

@@ -17,11 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.flyfishxu.vetraui.core.NotifyType
 import com.flyfishxu.vetraui.core.VetraButton
-import com.flyfishxu.vetraui.core.VetraCard
 import com.flyfishxu.vetraui.core.VetraGhostButton
 import com.flyfishxu.vetraui.core.VetraNotifyHost
 import com.flyfishxu.vetraui.core.VetraSecondaryButton
-import com.flyfishxu.vetraui.core.VetraSubtleDivider
 import com.flyfishxu.vetraui.core.rememberNotifyHostState
 import com.flyfishxu.vetraui.core.theme.VetraTheme
 import kotlinx.coroutines.delay
@@ -48,72 +46,71 @@ fun NotifyScreen() {
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             item {
-                VetraCard(modifier = Modifier.fillMaxWidth()) {
-                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        Text(
-                            "Basic Types",
-                            style = typography.headingMd.copy(color = colors.textPrimary)
-                        )
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(
+                        "Basic Types",
+                        style = typography.headingMd.copy(color = colors.textPrimary)
+                    )
 
-                        Text(
-                            "Four semantic notification types with distinct colors and icons",
-                            style = typography.bodyMd.copy(color = colors.textSecondary)
-                        )
+                    Text(
+                        "Four semantic notification types with distinct colors and icons",
+                        style = typography.bodyMd.copy(color = colors.textSecondary)
+                    )
 
-                        VetraSubtleDivider()
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        VetraButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    notifyHostState.showInfo("This is an informational message")
+                                }
+                            },
+                            modifier = Modifier.weight(1f)
                         ) {
-                            VetraButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        notifyHostState.showInfo("This is an informational message")
-                                    }
-                                },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text("Info")
-                            }
-
-                            VetraSecondaryButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        notifyHostState.showSuccess("Operation completed successfully!")
-                                    }
-                                },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text("Success")
-                            }
+                            Text("Info")
                         }
 
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        VetraSecondaryButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    notifyHostState.showSuccess("Operation completed successfully!")
+                                }
+                            },
+                            modifier = Modifier.weight(1f)
                         ) {
-                            VetraButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        notifyHostState.showWarning("Please review your input")
-                                    }
-                                },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text("Warning")
-                            }
+                            Text("Success")
+                        }
+                    }
 
-                            VetraSecondaryButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        notifyHostState.showDanger("An error occurred")
-                                    }
-                                },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text("Danger")
-                            }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        VetraButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    notifyHostState.showWarning("Please review your input")
+                                }
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Warning")
+                        }
+
+                        VetraSecondaryButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    notifyHostState.showDanger("An error occurred")
+                                }
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Danger")
                         }
                     }
                 }
@@ -121,88 +118,87 @@ fun NotifyScreen() {
 
             // Duration Options
             item {
-                VetraCard(modifier = Modifier.fillMaxWidth()) {
-                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        Text(
-                            "Duration Options",
-                            style = typography.headingMd.copy(color = colors.textPrimary)
-                        )
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(
+                        "Duration Options",
+                        style = typography.headingMd.copy(color = colors.textPrimary)
+                    )
 
-                        Text(
-                            "Control how long notifications stay visible",
-                            style = typography.bodyMd.copy(color = colors.textSecondary)
-                        )
+                    Text(
+                        "Control how long notifications stay visible",
+                        style = typography.bodyMd.copy(color = colors.textSecondary)
+                    )
 
-                        VetraSubtleDivider()
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        VetraButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    notifyHostState.showNotify(
+                                        message = "Quick message (1s)",
+                                        type = NotifyType.Info,
+                                        duration = 1000L
+                                    )
+                                }
+                            },
+                            modifier = Modifier.weight(1f)
                         ) {
-                            VetraButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        notifyHostState.showNotify(
-                                            message = "Quick message (1s)",
-                                            type = NotifyType.Info,
-                                            duration = 1000L
-                                        )
-                                    }
-                                },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text("1 Second")
-                            }
-
-                            VetraButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        notifyHostState.showNotify(
-                                            message = "Standard message (3s)",
-                                            type = NotifyType.Success,
-                                            duration = 3000L
-                                        )
-                                    }
-                                },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text("3 Seconds")
-                            }
+                            Text("1 Second")
                         }
 
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        VetraButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    notifyHostState.showNotify(
+                                        message = "Standard message (3s)",
+                                        type = NotifyType.Success,
+                                        duration = 3000L
+                                    )
+                                }
+                            },
+                            modifier = Modifier.weight(1f)
                         ) {
-                            VetraButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        notifyHostState.showNotify(
-                                            message = "Long message (5s)",
-                                            type = NotifyType.Warning,
-                                            duration = 5000L
-                                        )
-                                    }
-                                },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text("5 Seconds")
-                            }
+                            Text("3 Seconds")
+                        }
+                    }
 
-                            VetraButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        notifyHostState.showNotify(
-                                            message = "No auto-dismiss - click X to close",
-                                            type = NotifyType.Danger,
-                                            duration = null
-                                        )
-                                    }
-                                },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text("Manual Only")
-                            }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        VetraButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    notifyHostState.showNotify(
+                                        message = "Long message (5s)",
+                                        type = NotifyType.Warning,
+                                        duration = 5000L
+                                    )
+                                }
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("5 Seconds")
+                        }
+
+                        VetraButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    notifyHostState.showNotify(
+                                        message = "No auto-dismiss - click X to close",
+                                        type = NotifyType.Danger,
+                                        duration = null
+                                    )
+                                }
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Manual Only")
                         }
                     }
                 }
@@ -210,109 +206,107 @@ fun NotifyScreen() {
 
             // Advanced Options
             item {
-                VetraCard(modifier = Modifier.fillMaxWidth()) {
-                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        Text(
-                            "Advanced Options",
-                            style = typography.headingMd.copy(color = colors.textPrimary)
-                        )
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(
+                        "Advanced Options",
+                        style = typography.headingMd.copy(color = colors.textPrimary)
+                    )
 
-                        Text(
-                            "Additional notification configurations",
-                            style = typography.bodyMd.copy(color = colors.textSecondary)
-                        )
+                    Text(
+                        "Additional notification configurations",
+                        style = typography.bodyMd.copy(color = colors.textSecondary)
+                    )
 
-                        VetraSubtleDivider()
+                    VetraButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                notifyHostState.showNotify(
+                                    message = "This notification cannot be manually dismissed",
+                                    type = NotifyType.Info,
+                                    duration = 5000L,
+                                    dismissible = false
+                                )
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Non-dismissible (Auto-close only)")
+                    }
 
-                        VetraButton(
-                            onClick = {
-                                coroutineScope.launch {
-                                    notifyHostState.showNotify(
-                                        message = "This notification cannot be manually dismissed",
-                                        type = NotifyType.Info,
-                                        duration = 5000L,
-                                        dismissible = false
-                                    )
-                                }
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text("Non-dismissible (Auto-close only)")
-                        }
+                    VetraButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                notifyHostState.showNotify(
+                                    message = "This is a long notification message that demonstrates text wrapping across multiple lines in the notification banner. The notification component handles long text gracefully.",
+                                    type = NotifyType.Success,
+                                    duration = 5000L
+                                )
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Long Message")
+                    }
 
-                        VetraButton(
-                            onClick = {
-                                coroutineScope.launch {
-                                    notifyHostState.showNotify(
-                                        message = "This is a long notification message that demonstrates text wrapping across multiple lines in the notification banner. The notification component handles long text gracefully.",
-                                        type = NotifyType.Success,
-                                        duration = 5000L
-                                    )
-                                }
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text("Long Message")
-                        }
-
-                        VetraGhostButton(
-                            onClick = {
-                                coroutineScope.launch {
-                                    notifyHostState.clearAll()
-                                }
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text("Clear All Notifications")
-                        }
+                    VetraGhostButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                notifyHostState.clearAll()
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Clear All Notifications")
                     }
                 }
             }
 
             // Multiple Notifications
             item {
-                VetraCard(modifier = Modifier.fillMaxWidth()) {
-                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        Text(
-                            "Multiple Notifications",
-                            style = typography.headingMd.copy(color = colors.textPrimary)
-                        )
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(
+                        "Multiple Notifications",
+                        style = typography.headingMd.copy(color = colors.textPrimary)
+                    )
 
-                        Text(
-                            "Multiple notifications displayed simultaneously (max 50% screen height). Oldest auto-removed when limit exceeded.",
-                            style = typography.bodyMd.copy(color = colors.textSecondary)
-                        )
+                    Text(
+                        "Multiple notifications displayed simultaneously (max 50% screen height). Oldest auto-removed when limit exceeded.",
+                        style = typography.bodyMd.copy(color = colors.textSecondary)
+                    )
 
-                        VetraSubtleDivider()
+                    VetraButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                notifyHostState.showInfo("First notification")
+                                notifyHostState.showSuccess("Second notification")
+                                notifyHostState.showWarning("Third notification")
+                                notifyHostState.showDanger("Fourth notification")
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Show 4 Stacked Notifications")
+                    }
 
-                        VetraButton(
-                            onClick = {
-                                coroutineScope.launch {
-                                    notifyHostState.showInfo("First notification")
-                                    notifyHostState.showSuccess("Second notification")
-                                    notifyHostState.showWarning("Third notification")
-                                    notifyHostState.showDanger("Fourth notification")
+                    VetraSecondaryButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                // Show many notifications to test height limit
+                                repeat(10) { i ->
+                                    notifyHostState.showInfo("Notification ${i + 1}")
+                                    delay(100)
                                 }
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text("Show 4 Stacked Notifications")
-                        }
-
-                        VetraSecondaryButton(
-                            onClick = {
-                                coroutineScope.launch {
-                                    // Show many notifications to test height limit
-                                    repeat(10) { i ->
-                                        notifyHostState.showInfo("Notification ${i + 1}")
-                                        delay(100)
-                                    }
-                                }
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text("Test Height Limit (10 notifications)")
-                        }
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Test Height Limit (10 notifications)")
                     }
                 }
             }

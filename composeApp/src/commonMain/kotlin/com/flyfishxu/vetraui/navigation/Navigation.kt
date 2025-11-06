@@ -25,6 +25,7 @@ sealed class Destination {
     data object DialogsDetail : Destination()
     data object PullToRefreshDetail : Destination()
     data object NotifyDetail : Destination()
+    data object TabsDetail : Destination()
 }
 
 /**
@@ -98,6 +99,7 @@ class NavigationState(
                         is Destination.DialogsDetail -> "DialogsDetail"
                         is Destination.PullToRefreshDetail -> "PullToRefreshDetail"
                         is Destination.NotifyDetail -> "NotifyDetail"
+                        is Destination.TabsDetail -> "TabsDetail"
                     }
                 }
             },
@@ -117,6 +119,7 @@ class NavigationState(
                         "DialogsDetail" -> Destination.DialogsDetail
                         "PullToRefreshDetail" -> Destination.PullToRefreshDetail
                         "NotifyDetail" -> Destination.NotifyDetail
+                        "TabsDetail" -> Destination.TabsDetail
                         else -> null
                     }
                 }
@@ -158,7 +161,8 @@ fun Destination.getMainTab(): Destination {
         is Destination.BadgesAndChipsDetail,
         is Destination.DialogsDetail,
         is Destination.PullToRefreshDetail,
-        is Destination.NotifyDetail -> Destination.Components
+        is Destination.NotifyDetail,
+        is Destination.TabsDetail -> Destination.Components
 
         is Destination.Settings -> Destination.Settings
     }

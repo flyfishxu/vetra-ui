@@ -61,6 +61,7 @@ import com.flyfishxu.vetraui.screens.NotifyScreen
 import com.flyfishxu.vetraui.screens.PullToRefreshScreen
 import com.flyfishxu.vetraui.screens.SettingsScreen
 import com.flyfishxu.vetraui.screens.SlidersScreen
+import com.flyfishxu.vetraui.screens.TabsScreen
 import com.flyfishxu.vetraui.theme.ThemeMode
 import com.flyfishxu.vetraui.theme.isSystemInDarkTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -127,6 +128,7 @@ fun App(
                             is Destination.DialogsDetail -> "Dialogs"
                             is Destination.PullToRefreshDetail -> "Pull to Refresh"
                             is Destination.NotifyDetail -> "Notifications"
+                            is Destination.TabsDetail -> "Tabs"
                         }
                     )
                 },
@@ -187,6 +189,7 @@ fun App(
                     is Destination.DialogsDetail -> DialogsScreen()
                     is Destination.PullToRefreshDetail -> PullToRefreshScreen()
                     is Destination.NotifyDetail -> NotifyScreen()
+                    is Destination.TabsDetail -> TabsScreen()
                 }
             }
 

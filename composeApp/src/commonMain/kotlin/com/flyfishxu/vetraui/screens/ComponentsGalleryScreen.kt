@@ -105,6 +105,17 @@ fun ComponentsGalleryScreen(
             )
         }
 
+        // Tabs
+        item {
+            ComponentCategoryCard(
+                title = "Tabs",
+                description = "Organize content with smooth animated tab navigation",
+                icon = Icons.Filled.GridView,
+                iconColor = colors.brand,
+                onClick = { onNavigateToDetail(Destination.TabsDetail) }
+            )
+        }
+
         // Badges & Chips
         item {
             ComponentCategoryCard(
@@ -211,7 +222,7 @@ fun ComponentsGalleryScreen(
                         )
 
                         StatItem(
-                            value = "9",
+                            value = "10",
                             label = "Categories",
                             color = colors.accent
                         )

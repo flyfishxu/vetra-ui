@@ -73,186 +73,162 @@ fun SlidersScreen() {
             }
         }
         item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(
-                        "Continuous Slider",
-                        style = typography.headingMd.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "Smooth value selection with no discrete steps",
-                        style = typography.bodySm.copy(color = colors.textSecondary)
-                    )
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Text(
+                    "Continuous Slider",
+                    style = typography.headingMd.copy(color = colors.textPrimary)
+                )
+                Text(
+                    "Smooth value selection with no discrete steps",
+                    style = typography.bodySm.copy(color = colors.textSecondary)
+                )
 
-                    VetraDivider()
-
-                    VetraSliderWithLabel(
-                        value = sliderValue1,
-                        onValueChange = { sliderValue1 = it },
-                        label = "Progress",
-                        valueFormatter = { "${(it * 100).toInt()}%" }
-                    )
-                }
+                VetraSliderWithLabel(
+                    value = sliderValue1,
+                    onValueChange = { sliderValue1 = it },
+                    label = "Progress",
+                    valueFormatter = { "${(it * 100).toInt()}%" }
+                )
             }
         }
 
         // Slider with Custom Range
         item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(
-                        "Custom Range Slider",
-                        style = typography.headingMd.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "Define your own value range (0-100)",
-                        style = typography.bodySm.copy(color = colors.textSecondary)
-                    )
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Text(
+                    "Custom Range Slider",
+                    style = typography.headingMd.copy(color = colors.textPrimary)
+                )
+                Text(
+                    "Define your own value range (0-100)",
+                    style = typography.bodySm.copy(color = colors.textSecondary)
+                )
 
-                    VetraSubtleDivider()
-
-                    VetraSliderWithLabel(
-                        value = sliderValue2,
-                        onValueChange = { sliderValue2 = it },
-                        label = "Volume",
-                        valueRange = 0f..100f,
-                        valueFormatter = { "${it.toInt()}" }
-                    )
-                }
+                VetraSliderWithLabel(
+                    value = sliderValue2,
+                    onValueChange = { sliderValue2 = it },
+                    label = "Volume",
+                    valueRange = 0f..100f,
+                    valueFormatter = { "${it.toInt()}" }
+                )
             }
         }
 
         // Discrete Slider
         item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(
-                        "Discrete Slider",
-                        style = typography.headingMd.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "Snap to specific step values (5 steps)",
-                        style = typography.bodySm.copy(color = colors.textSecondary)
-                    )
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Text(
+                    "Discrete Slider",
+                    style = typography.headingMd.copy(color = colors.textPrimary)
+                )
+                Text(
+                    "Snap to specific step values (5 steps)",
+                    style = typography.bodySm.copy(color = colors.textSecondary)
+                )
 
-                    VetraBrandDivider()
-
-                    VetraSliderWithLabel(
-                        value = sliderValue4,
-                        onValueChange = { sliderValue4 = it },
-                        label = "Rating",
-                        valueRange = 1f..5f,
-                        steps = 3,
-                        valueFormatter = { "⭐".repeat(it.toInt()) }
-                    )
-                }
+                VetraSliderWithLabel(
+                    value = sliderValue4,
+                    onValueChange = { sliderValue4 = it },
+                    label = "Rating",
+                    valueRange = 1f..5f,
+                    steps = 3,
+                    valueFormatter = { "⭐".repeat(it.toInt()) }
+                )
             }
         }
 
         // Range Slider
         item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(
-                        "Range Slider",
-                        style = typography.headingMd.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "Select a range with start and end values",
-                        style = typography.bodySm.copy(color = colors.textSecondary)
-                    )
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Text(
+                    "Range Slider",
+                    style = typography.headingMd.copy(color = colors.textPrimary)
+                )
+                Text(
+                    "Select a range with start and end values",
+                    style = typography.bodySm.copy(color = colors.textSecondary)
+                )
 
-                    VetraStrongDivider()
-
-                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                "Time Range",
-                                style = typography.labelLg.copy(color = colors.textPrimary)
-                            )
-                            Text(
-                                "${(rangeSliderValues.start * 100).toInt()}% - ${(rangeSliderValues.endInclusive * 100).toInt()}%",
-                                style = typography.labelLg.copy(color = colors.brand)
-                            )
-                        }
-
-                        VetraRangeSlider(
-                            values = rangeSliderValues,
-                            onValuesChange = { rangeSliderValues = it }
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            "Time Range",
+                            style = typography.labelLg.copy(color = colors.textPrimary)
+                        )
+                        Text(
+                            "${(rangeSliderValues.start * 100).toInt()}% - ${(rangeSliderValues.endInclusive * 100).toInt()}%",
+                            style = typography.labelLg.copy(color = colors.brand)
                         )
                     }
+
+                    VetraRangeSlider(
+                        values = rangeSliderValues,
+                        onValuesChange = { rangeSliderValues = it }
+                    )
                 }
             }
         }
 
         // Price Range Example
         item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(
-                        "Price Filter",
-                        style = typography.headingMd.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "Common use case: filtering by price range",
-                        style = typography.bodySm.copy(color = colors.textSecondary)
-                    )
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Text(
+                    "Price Filter",
+                    style = typography.headingMd.copy(color = colors.textPrimary)
+                )
+                Text(
+                    "Common use case: filtering by price range",
+                    style = typography.bodySm.copy(color = colors.textSecondary)
+                )
 
-                    VetraInsetDivider(startPadding = 0.dp)
-
-                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                "Price Range",
-                                style = typography.labelLg.copy(color = colors.textPrimary)
-                            )
-                            Text(
-                                "$${priceRange.start.toInt()} - $${priceRange.endInclusive.toInt()}",
-                                style = typography.labelLg.copy(color = colors.accent)
-                            )
-                        }
-
-                        VetraRangeSlider(
-                            values = priceRange,
-                            onValuesChange = { priceRange = it },
-                            valueRange = 0f..200f,
-                            steps = 18
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            "Price Range",
+                            style = typography.labelLg.copy(color = colors.textPrimary)
+                        )
+                        Text(
+                            "$${priceRange.start.toInt()} - $${priceRange.endInclusive.toInt()}",
+                            style = typography.labelLg.copy(color = colors.accent)
                         )
                     }
+
+                    VetraRangeSlider(
+                        values = priceRange,
+                        onValuesChange = { priceRange = it },
+                        valueRange = 0f..200f,
+                        steps = 18
+                    )
                 }
             }
         }
 
         // Disabled State
         item {
-            VetraCard(modifier = Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(
-                        "Disabled State",
-                        style = typography.headingMd.copy(color = colors.textPrimary)
-                    )
-                    Text(
-                        "Shows read-only values",
-                        style = typography.bodySm.copy(color = colors.textSecondary)
-                    )
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Text(
+                    "Disabled State",
+                    style = typography.headingMd.copy(color = colors.textPrimary)
+                )
+                Text(
+                    "Shows read-only values",
+                    style = typography.bodySm.copy(color = colors.textSecondary)
+                )
 
-                    VetraDivider()
-
-                    VetraSliderWithLabel(
-                        value = sliderValue3,
-                        onValueChange = { },
-                        label = "Battery Level",
-                        enabled = false,
-                        valueRange = 0f..100f,
-                        valueFormatter = { "${it.toInt()}%" }
-                    )
-                }
+                VetraSliderWithLabel(
+                    value = sliderValue3,
+                    onValueChange = { },
+                    label = "Battery Level",
+                    enabled = false,
+                    valueRange = 0f..100f,
+                    valueFormatter = { "${it.toInt()}%" }
+                )
             }
         }
 
