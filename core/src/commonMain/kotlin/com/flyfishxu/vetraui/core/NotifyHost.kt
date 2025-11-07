@@ -23,6 +23,9 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.flyfishxu.vetraui.core.theme.VetraTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -45,8 +48,15 @@ class NotifyHostState {
     private val _notifications = mutableStateListOf<NotifyItem>()
     private val _visibilityMap = mutableStateMapOf<String, Boolean>()
     private val _heightMap = mutableStateMapOf<String, Int>()
+    private val internalScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     internal var maxHeightPx = 0
+
+    /**
+     * Single notification mode - when enabled, only one notification is shown at a time.
+     * New notifications will automatically dismiss the existing one with animation.
+     */
+    var singleNotificationMode: Boolean = false
 
     /**
      * All currently visible notifications
@@ -121,9 +131,34 @@ class NotifyHostState {
             )
         )
 
-        // Check if we need to remove old notifications
-        if (maxHeightPx > 0) {
-            checkAndRemoveOldestIfNeeded()
+        // If single notification mode is enabled, dismiss all existing notifications first
+        if (singleNotificationMode && _notifications.isNotEmpty()) {
+            val existingIds = _notifications.map { it.id }
+            
+            // Trigger exit animation for all existing notifications at once
+            mutex.withLock {
+                existingIds.forEach { existingId ->
+                    _visibilityMap[existingId] = false
+                }
+            }
+            
+            // Don't wait for animation, let them animate out while new one comes in
+            // Remove after animation completes (NotifyExitDuration = 250ms, using 300ms for safety)
+            internalScope.launch {
+                delay(300)
+                mutex.withLock {
+                    existingIds.forEach { existingId ->
+                        _notifications.removeAll { it.id == existingId }
+                        _visibilityMap.remove(existingId)
+                        _heightMap.remove(existingId)
+                    }
+                }
+            }
+        } else {
+            // Check if we need to remove old notifications (multi-notification mode)
+            if (maxHeightPx > 0) {
+                checkAndRemoveOldestIfNeeded()
+            }
         }
 
         mutex.withLock {
@@ -262,8 +297,12 @@ fun rememberNotifyHostState(): NotifyHostState {
  *
  * Container for displaying notifications managed by NotifyHostState.
  * Place this at the top level of your screen or app to show notifications.
- * Supports multiple notifications with automatic height limit (max 50% of screen height).
- * Oldest notifications are automatically removed when limit is exceeded.
+ * 
+ * Supports two display modes:
+ * - Multiple notifications: Shows multiple notifications stacked (max 50% of screen height)
+ * - Single notification mode: Shows only one notification at a time. When enabled via
+ *   `hostState.singleNotificationMode = true`, new notifications will automatically
+ *   dismiss existing ones with smooth animations.
  *
  * @param hostState The state holder managing notifications
  * @param modifier Modifier for the host container

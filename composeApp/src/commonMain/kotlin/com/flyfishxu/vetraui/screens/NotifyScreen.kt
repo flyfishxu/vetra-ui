@@ -11,7 +11,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,6 +24,7 @@ import com.flyfishxu.vetraui.core.VetraButton
 import com.flyfishxu.vetraui.core.VetraGhostButton
 import com.flyfishxu.vetraui.core.VetraNotifyHost
 import com.flyfishxu.vetraui.core.VetraSecondaryButton
+import com.flyfishxu.vetraui.core.VetraSwitchWithLabel
 import com.flyfishxu.vetraui.core.rememberNotifyHostState
 import com.flyfishxu.vetraui.core.theme.VetraTheme
 import kotlinx.coroutines.delay
@@ -36,6 +41,10 @@ fun NotifyScreen() {
     val typography = VetraTheme.typography
     val notifyHostState = rememberNotifyHostState()
     val coroutineScope = rememberCoroutineScope()
+    var singleNotificationMode by remember { mutableStateOf(false) }
+
+    // Sync state with notifyHostState
+    notifyHostState.singleNotificationMode = singleNotificationMode
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -45,6 +54,36 @@ fun NotifyScreen() {
             contentPadding = PaddingValues(24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
+            // Settings Section
+            item {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(
+                        "Display Settings",
+                        style = typography.headingMd.copy(color = colors.textPrimary)
+                    )
+
+                    Text(
+                        "Configure how notifications are displayed",
+                        style = typography.bodyMd.copy(color = colors.textSecondary)
+                    )
+
+                    VetraSwitchWithLabel(
+                        checked = singleNotificationMode,
+                        onCheckedChange = { singleNotificationMode = it },
+                        label = "Single Notification Mode",
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Text(
+                        "When enabled, only one notification is shown at a time. New notifications will automatically dismiss the existing one.",
+                        style = typography.bodySm.copy(color = colors.textTertiary)
+                    )
+                }
+            }
+
             item {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
