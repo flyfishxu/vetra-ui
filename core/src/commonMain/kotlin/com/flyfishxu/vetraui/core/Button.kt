@@ -195,8 +195,6 @@ fun VetraOutlinedButton(
     Box(
         modifier = modifier
             .defaultMinSize(minWidth = ButtonMinWidth, minHeight = ButtonHeight)
-            .clip(shapes.sm)
-            .background(Color.Transparent)
             .then(
                 // Border implementation
                 Modifier
@@ -205,6 +203,7 @@ fun VetraOutlinedButton(
                     .padding(1.dp)
                     .background(colors.canvasElevated, shapes.sm)
             )
+            .clip(shapes.sm)
             .clickable(
                 enabled = enabled,
                 onClick = onClick,

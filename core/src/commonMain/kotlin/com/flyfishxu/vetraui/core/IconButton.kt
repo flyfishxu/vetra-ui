@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import com.flyfishxu.vetraui.core.indication.vetraPressIndication
 import com.flyfishxu.vetraui.core.theme.VetraTheme
 import com.flyfishxu.vetraui.core.theme.vetraShadow
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -83,7 +84,7 @@ fun VetraIconButton(
                 enabled = enabled,
                 role = Role.Button,
                 interactionSource = interactionSource,
-                indication = null
+                indication = vetraPressIndication()
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -156,7 +157,7 @@ fun VetraFilledIconButton(
                 enabled = enabled,
                 role = Role.Button,
                 interactionSource = interactionSource,
-                indication = null
+                indication = vetraPressIndication()
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -219,22 +220,20 @@ fun VetraOutlinedIconButton(
     Box(
         modifier = modifier
             .size(IconButtonSize)
-            .clip(shapes.sm)
-            .background(Color.Transparent)
             .then(
                 // Border implementation
                 Modifier
                     .padding(1.dp)
                     .background(borderColor, shapes.sm)
                     .padding(1.dp)
-                    .background(Color.Transparent, shapes.sm)
             )
+            .clip(shapes.sm)
             .clickable(
                 onClick = onClick,
                 enabled = enabled,
                 role = Role.Button,
                 interactionSource = interactionSource,
-                indication = null
+                indication = vetraPressIndication()
             ),
         contentAlignment = Alignment.Center
     ) {
