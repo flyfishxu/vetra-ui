@@ -1,0 +1,151 @@
+site_name: Vetra UI
+site_description: A Modern, Elegant UI Design System for Compose Multiplatform
+site_author: FlyFishXu
+site_url: https://flyfishxu.github.io/vetra-ui/
+
+# Repository
+repo_name: Vetra UI on GitHub
+repo_url: https://github.com/flyfishxu/vetra-ui
+edit_uri: edit/main/docs/docs
+
+# Copyright
+copyright: Copyright &copy; 2025 FlyfishXu & All VetraUI contributors
+
+# Navigation
+nav:
+  - Introduction:
+    - Welcome: index.md
+    - Installation:
+      - Overview: introduction/installation/overview.md
+      - Requirements: introduction/installation/requirements.md
+      - Add Dependency: introduction/installation/dependency.md
+      - Platform Setup: introduction/installation/platforms.md
+      - Troubleshooting: introduction/installation/troubleshooting.md
+    - Quick Start:
+      - Overview: introduction/quick-start/overview.md
+      - Setup: introduction/quick-start/setup.md
+      - Using Components: introduction/quick-start/components.md
+      - Theming: introduction/quick-start/theming.md
+      - Common Patterns: introduction/quick-start/patterns.md
+    - Contributing:
+      - Overview: introduction/contributing/overview.md
+      - Ways to Contribute: introduction/contributing/ways.md
+      - Development Setup: introduction/contributing/setup.md
+      - Development Guidelines: introduction/contributing/guidelines.md
+      - Pull Request Process: introduction/contributing/pull-request.md
+  
+  - Design System:
+    - Overview: design-system/overview.md
+    - Colors: design-system/colors.md
+    - Typography: design-system/typography.md
+    - Shapes: design-system/shapes.md
+    - Elevation: design-system/elevation.md
+  
+  - Components:
+    - Overview: components/overview.md
+    - Input:
+      - Buttons: components/input/buttons.md
+      - Icon Button: components/input/icon-button.md
+      - Text Fields: components/input/text-fields.md
+      - Switch: components/input/switch.md
+      - Checkbox: components/input/checkbox.md
+      - Radio Button: components/input/radio-button.md
+      - Slider: components/input/slider.md
+    - Display:
+      - Cards: components/display/cards.md
+      - Chips: components/display/chips.md
+      - Badges: components/display/badges.md
+      - Divider: components/display/divider.md
+    - Navigation:
+      - Top App Bar: components/navigation/top-app-bar.md
+      - Navigation Bar: components/navigation/navigation-bar.md
+      - Tabs: components/navigation/tabs.md
+    - Feedback:
+      - Dialog: components/feedback/dialog.md
+      - Notify: components/feedback/notify.md
+      - Loading: components/feedback/loading.md
+      - Skeleton: components/feedback/skeleton.md
+      - Pull to Refresh: components/feedback/pull-to-refresh.md
+    - Action:
+      - Menu: components/action/menu.md
+
+# Markdown Extensions
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.details
+  - pymdownx.superfences
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+# Plugins
+plugins:
+  - search
+
+# Theme Configuration
+theme:
+  name: material
+  favicon: assets/vetra.svg
+  logo: assets/vetra.svg
+  
+  features:
+    - content.code.copy
+    - content.action.edit
+    - content.tabs.link
+    - navigation.expand
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.instant
+    - navigation.indexes
+  
+  color_mode: light
+  nav_style: light
+  user_color_mode_toggle: true
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+      primary: black
+      accent: blue
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+      primary: black
+      accent: blue
+  
+  # Fonts
+  font:
+    text: Inter
+    code: JetBrains Mono
+  
+  # Icon
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/flyfishxu/vetra-ui
+      name: Vetra UI on GitHub

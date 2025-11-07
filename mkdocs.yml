@@ -1,0 +1,170 @@
+site_name: Vetra UI
+site_description: A Modern, Elegant UI Design System for Compose Multiplatform
+site_author: FlyFishXu
+site_url: https://flyfishxu.github.io/vetra-ui/
+
+# Repository
+repo_name: flyfishxu/vetra-ui
+repo_url: https://github.com/flyfishxu/vetra-ui
+edit_uri: edit/main/docs/
+
+# Copyright
+copyright: Copyright &copy; 2025 FlyFishXu
+
+# Navigation
+nav:
+  - Documentation:
+      - Overview:
+          - index.md
+          - Key Features: design-system/index.md
+          - Design Philosophy: design-system/philosophy.md
+          - Glossary: getting-started/migration.md
+      
+      - Getting Started:
+          - Installation: getting-started/installation.md
+          - Quick Start: getting-started/quick-start.md
+          - Migration from Material: getting-started/migration.md
+      
+      - Design System:
+          - Colors: design-system/colors.md
+          - Typography: design-system/typography.md
+          - Shapes: design-system/shapes.md
+          - Elevation & Shadows: design-system/elevation.md
+          - Motion & Animation: design-system/motion.md
+      
+      - Components:
+          - Overview: components/index.md
+          - Buttons:
+              - Button: components/buttons/button.md
+              - Secondary Button: components/buttons/secondary-button.md
+              - Outlined Button: components/buttons/outlined-button.md
+              - Ghost Button: components/buttons/ghost-button.md
+              - Danger Button: components/buttons/danger-button.md
+              - Icon Button: components/buttons/icon-button.md
+          - Cards:
+              - Card: components/cards/card.md
+              - Flat Card: components/cards/flat-card.md
+              - Elevated Card: components/cards/elevated-card.md
+              - Outlined Card: components/cards/outlined-card.md
+              - Brand Card: components/cards/brand-card.md
+          - Inputs:
+              - Text Field: components/inputs/text-field.md
+              - Switch: components/inputs/switch.md
+              - Checkbox: components/inputs/checkbox.md
+          - Navigation:
+              - Top App Bar: components/navigation/top-app-bar.md
+              - Large Top App Bar: components/navigation/large-top-app-bar.md
+              - Center Top App Bar: components/navigation/center-top-app-bar.md
+              - Navigation Bar: components/navigation/navigation-bar.md
+      
+      - Customization:
+          - Overview: customization/index.md
+          - Theming: customization/theming.md
+          - Custom Colors: customization/colors.md
+          - Custom Typography: customization/typography.md
+      
+      - Best Practices:
+          - Overview: best-practices/index.md
+          - Design Guidelines: best-practices/design-guidelines.md
+          - Accessibility: best-practices/accessibility.md
+          - Performance: best-practices/performance.md
+  
+  - Community:
+      - Overview: community/index.md
+      - Contributing: community/contributing.md
+      - Changelog: community/changelog.md
+
+# Markdown Extensions
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.details
+  - pymdownx.superfences
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+# Plugins
+plugins:
+  - search
+  - redirects:
+      redirect_maps:
+        'getting-started/index.md': 'getting-started/installation.md'
+        'design-system/index.md': 'design-system/philosophy.md'
+
+# Theme Configuration
+theme:
+  name: material
+  custom_dir: overrides
+  favicon: assets/vetra.svg
+  logo: assets/vetra.svg
+  
+  features:
+    - content.code.copy
+    - content.action.edit
+    - content.tabs.link
+    - navigation.expand
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.instant
+    - navigation.indexes
+  
+  color_mode: light
+  nav_style: light
+  user_color_mode_toggle: true
+  
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+      primary: blue
+      accent: purple
+    
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+      primary: blue
+      accent: purple
+  
+  # Fonts
+  font:
+    text: Inter
+    code: JetBrains Mono
+  
+  # Icon
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+
+# Extra Configuration
+extra_css:
+  - assets/stylesheets/extra.css
+
+extra_javascript:
+  - assets/javascripts/extra.js
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/flyfishxu/vetra-ui
+      name: Vetra UI on GitHub
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/flyfishxu
+      name: Follow on Twitter
