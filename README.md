@@ -45,7 +45,7 @@ Add dependency in `libs.versions.toml`:
 
 ```toml
 [versions]
-vetraui = "1.0.0-alpha02"
+vetraui = "1.0.0-alpha03"
 
 [libraries]
 vetraui-core = { module = "com.flyfishxu.vetraui:core", version.ref = "vetraui" }

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -28,9 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.flyfishxu.vetraui.core.VetraCard
-import com.flyfishxu.vetraui.core.VetraOutlinedCard
-import com.flyfishxu.vetraui.core.VetraSubtleDivider
 import com.flyfishxu.vetraui.core.VetraTab
 import com.flyfishxu.vetraui.core.VetraTabRow
 import com.flyfishxu.vetraui.core.theme.VetraTheme
@@ -250,28 +246,3 @@ fun TabsScreen() {
         }
     }
 }
-
-/**
- * Guideline Item
- */
-@Composable
-private fun GuidelineItem(
-    title: String,
-    description: String
-) {
-    val typography = VetraTheme.typography
-    val colors = VetraTheme.colors
-
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Text(
-            text = "• $title",
-            style = typography.bodyMd.copy(color = colors.brand)
-        )
-        Text(
-            text = description,
-            style = typography.bodySm.copy(color = colors.textSecondary),
-            modifier = Modifier.padding(start = 16.dp)
-        )
-    }
-}
-

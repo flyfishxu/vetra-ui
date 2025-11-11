@@ -134,14 +134,14 @@ class NotifyHostState {
         // If single notification mode is enabled, dismiss all existing notifications first
         if (singleNotificationMode && _notifications.isNotEmpty()) {
             val existingIds = _notifications.map { it.id }
-            
+
             // Trigger exit animation for all existing notifications at once
             mutex.withLock {
                 existingIds.forEach { existingId ->
                     _visibilityMap[existingId] = false
                 }
             }
-            
+
             // Don't wait for animation, let them animate out while new one comes in
             // Remove after animation completes (NotifyExitDuration = 250ms, using 300ms for safety)
             internalScope.launch {
@@ -297,7 +297,7 @@ fun rememberNotifyHostState(): NotifyHostState {
  *
  * Container for displaying notifications managed by NotifyHostState.
  * Place this at the top level of your screen or app to show notifications.
- * 
+ *
  * Supports two display modes:
  * - Multiple notifications: Shows multiple notifications stacked (max 50% of screen height)
  * - Single notification mode: Shows only one notification at a time. When enabled via

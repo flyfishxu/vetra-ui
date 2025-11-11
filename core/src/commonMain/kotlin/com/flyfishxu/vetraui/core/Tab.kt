@@ -1,9 +1,7 @@
 package com.flyfishxu.vetraui.core
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -13,11 +11,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -42,17 +38,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.SubcomposeLayout
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.flyfishxu.vetraui.core.indication.vetraPressIndication
 import com.flyfishxu.vetraui.core.theme.VetraTheme
@@ -127,7 +118,7 @@ private fun TabRowLayout(
 ) {
     val density = LocalDensity.current
     val indicatorHeightPx = with(density) { IndicatorHeight.roundToPx() }
-    
+
     // Animate indicator position as a fraction (0f to tabCount-1)
     val animatedSelectedIndex by animateFloatAsState(
         targetValue = selectedTabIndex.toFloat(),
@@ -137,15 +128,15 @@ private fun TabRowLayout(
         ),
         label = "tabIndicatorPosition"
     )
-    
+
     SubcomposeLayout { constraints ->
         val tabHeight = TabHeight.roundToPx()
-        
+
         // First pass: count tabs to calculate width
         val tabMeasurables = subcompose("tabs", tabs)
         val tabCount = tabMeasurables.size
         val tabWidth = if (tabCount > 0) constraints.maxWidth / tabCount else constraints.maxWidth
-        
+
         // Measure tabs with calculated fixed width
         val tabPlaceables = tabMeasurables.map { measurable ->
             measurable.measure(
@@ -155,14 +146,14 @@ private fun TabRowLayout(
                 )
             )
         }
-        
+
         // Calculate animated indicator position
         val safeAnimatedIndex = animatedSelectedIndex.coerceIn(
             0f,
             maxOf(0f, tabCount - 1f)
         )
         val indicatorOffset = (safeAnimatedIndex * tabWidth).toInt()
-        
+
         // Measure indicator
         val indicatorPlaceable = subcompose("indicator") {
             Box(
@@ -180,7 +171,7 @@ private fun TabRowLayout(
                 height = indicatorHeightPx
             )
         )
-        
+
         layout(constraints.maxWidth, tabHeight) {
             // Place tabs
             tabPlaceables.forEachIndexed { index, placeable ->
@@ -189,7 +180,7 @@ private fun TabRowLayout(
                     y = 0
                 )
             }
-            
+
             // Place animated indicator at bottom
             indicatorPlaceable.placeRelative(
                 x = indicatorOffset,
@@ -244,7 +235,7 @@ fun VetraTab(
 ) {
     val colors = VetraTheme.colors
     val shapes = VetraTheme.shapes
-    val typography = VetraTheme.typography
+    VetraTheme.typography
     val interactionSource = remember { MutableInteractionSource() }
 
     val contentColor by animateColorAsState(
