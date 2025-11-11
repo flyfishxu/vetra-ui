@@ -12,6 +12,7 @@ VetraNotify provides a modern notification system with:
 - Icon + message layout
 - Adaptive shadows for depth
 - Multiple notification types
+- Single notification mode support
 
 ```kotlin
 VetraNotifyHost {
@@ -134,6 +135,28 @@ VetraNotifyHost {
 }
 ```
 
+### Single Notification Mode
+
+When enabled, only one notification is displayed at a time. New notifications will automatically dismiss existing ones with smooth animations.
+
+```kotlin
+val notifyHostState = rememberNotifyHostState()
+
+// Enable single notification mode
+notifyHostState.singleNotificationMode = true
+
+VetraNotifyHost(hostState = notifyHostState) {
+    // Your app content
+    VetraNotifySuccess(
+        message = "Settings saved",
+        visible = visible,
+        onDismiss = { visible = false }
+    )
+}
+```
+
+This mode is useful when you want to ensure users focus on one notification at a time, preventing notification overload.
+
 ## Best Practices
 
 !!! success "Do"
@@ -142,6 +165,7 @@ VetraNotifyHost {
     - ✅ Use appropriate notification types
     - ✅ Provide actions when helpful
     - ✅ Auto-dismiss after reasonable time
+    - ✅ Enable single notification mode when you want users to focus on one message at a time
 
 !!! failure "Don't"
     - ❌ Use notifications for critical errors (use dialogs)
@@ -164,7 +188,28 @@ Container for notifications. Wrap your app content with this.
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
+| `hostState` | `NotifyHostState?` | `null` | Optional state holder for advanced control |
+| `modifier` | `Modifier` | `Modifier` | Modifier for the host container |
 | `content` | `@Composable () -> Unit` | Required | App content |
+
+### NotifyHostState
+
+State holder for managing notification display behavior.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `singleNotificationMode` | `Boolean` | `false` | When enabled, only one notification is shown at a time. New notifications automatically dismiss existing ones with animation. |
+
+**Usage:**
+
+```kotlin
+val notifyHostState = rememberNotifyHostState()
+notifyHostState.singleNotificationMode = true
+
+VetraNotifyHost(hostState = notifyHostState) {
+    // Your notifications
+}
+```
 
 ### All Notify Variants
 
