@@ -7,6 +7,7 @@ Pull to refresh allows users to refresh content by pulling down from the top.
 VetraPullToRefresh provides a modern pull-to-refresh component with:
 
 - Smooth gesture recognition and animations
+- Instant follow during pull (no position animation while dragging)
 - Elegant loading indicator with rotation
 - Customizable trigger threshold
 - Support for custom indicators

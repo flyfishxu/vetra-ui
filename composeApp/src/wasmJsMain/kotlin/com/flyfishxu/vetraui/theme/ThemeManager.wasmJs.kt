@@ -1,6 +1,11 @@
 package com.flyfishxu.vetraui.theme
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import kotlinx.browser.window
 import org.w3c.dom.events.Event
 
@@ -19,19 +24,19 @@ actual fun isSystemInDarkTheme(): Boolean {
 
     DisposableEffect(Unit) {
         val mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
-        
+
         // Initial check
         isDark = mediaQuery.matches
-        
+
         // Create listener for theme changes
         val listener: (Event) -> Unit = { _ ->
             // Re-check the media query when the event fires
             isDark = window.matchMedia("(prefers-color-scheme: dark)").matches
         }
-        
+
         // Add listener
         mediaQuery.addEventListener("change", listener)
-        
+
         onDispose {
             // Remove listener
             mediaQuery.removeEventListener("change", listener)

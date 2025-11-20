@@ -59,6 +59,7 @@ import com.flyfishxu.vetraui.screens.LoadingScreen
 import com.flyfishxu.vetraui.screens.MenuScreen
 import com.flyfishxu.vetraui.screens.NotifyScreen
 import com.flyfishxu.vetraui.screens.PullToRefreshScreen
+import com.flyfishxu.vetraui.screens.SegmentedButtonsScreen
 import com.flyfishxu.vetraui.screens.SettingsScreen
 import com.flyfishxu.vetraui.screens.SlidersScreen
 import com.flyfishxu.vetraui.screens.TabsScreen
@@ -129,6 +130,7 @@ fun App(
                             is Destination.PullToRefreshDetail -> "Pull to Refresh"
                             is Destination.NotifyDetail -> "Notifications"
                             is Destination.TabsDetail -> "Tabs"
+                            is Destination.SegmentedButtonsDetail -> "Segmented Buttons"
                         }
                     )
                 },
@@ -190,6 +192,7 @@ fun App(
                     is Destination.PullToRefreshDetail -> PullToRefreshScreen()
                     is Destination.NotifyDetail -> NotifyScreen()
                     is Destination.TabsDetail -> TabsScreen()
+                    is Destination.SegmentedButtonsDetail -> SegmentedButtonsScreen()
                 }
             }
 

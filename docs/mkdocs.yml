@@ -46,6 +46,7 @@ nav:
     - Input:
       - Buttons: components/input/buttons.md
       - Icon Button: components/input/icon-button.md
+      - Segmented Button: components/input/segmented-button.md
       - Text Fields: components/input/text-fields.md
       - Switch: components/input/switch.md
       - Checkbox: components/input/checkbox.md

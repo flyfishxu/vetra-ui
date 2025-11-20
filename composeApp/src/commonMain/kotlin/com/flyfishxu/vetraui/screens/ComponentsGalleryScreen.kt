@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.HourglassBottom
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.QuestionAnswer
+import androidx.compose.material.icons.filled.ToggleOn
 import androidx.compose.material.icons.filled.TouchApp
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Icon
@@ -112,6 +113,17 @@ fun ComponentsGalleryScreen(
                 icon = Icons.Filled.GridView,
                 iconColor = colors.brand,
                 onClick = { onNavigateToDetail(Destination.TabsDetail) }
+            )
+        }
+
+        // Segmented Buttons
+        item {
+            ComponentCategoryCard(
+                title = "Segmented Buttons",
+                description = "Mutually exclusive selections in a single control",
+                icon = Icons.Filled.ToggleOn,
+                iconColor = colors.accent,
+                onClick = { onNavigateToDetail(Destination.SegmentedButtonsDetail) }
             )
         }
 
@@ -221,7 +233,7 @@ fun ComponentsGalleryScreen(
                         )
 
                         StatItem(
-                            value = "10",
+                            value = "11",
                             label = "Categories",
                             color = colors.accent
                         )

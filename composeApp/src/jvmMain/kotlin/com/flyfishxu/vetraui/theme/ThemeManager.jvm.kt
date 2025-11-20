@@ -2,7 +2,6 @@ package com.flyfishxu.vetraui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import java.awt.Toolkit
 
 /**
  * JVM Desktop implementation: checks system properties
@@ -25,6 +24,7 @@ actual fun isSystemInDarkTheme(): Boolean {
                         .equals("Dark", ignoreCase = true)
                     isDark
                 }
+
                 osName.contains("win") -> {
                     // Windows: check registry for dark mode
                     try {
@@ -38,6 +38,7 @@ actual fun isSystemInDarkTheme(): Boolean {
                         false
                     }
                 }
+
                 else -> {
                     // Linux/other: try to detect from GTK theme
                     val gtkTheme = System.getenv("GTK_THEME") ?: ""

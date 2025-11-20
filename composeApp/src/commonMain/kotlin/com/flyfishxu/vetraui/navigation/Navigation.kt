@@ -26,6 +26,7 @@ sealed class Destination {
     data object PullToRefreshDetail : Destination()
     data object NotifyDetail : Destination()
     data object TabsDetail : Destination()
+    data object SegmentedButtonsDetail : Destination()
 }
 
 /**
@@ -100,6 +101,7 @@ class NavigationState(
                         is Destination.PullToRefreshDetail -> "PullToRefreshDetail"
                         is Destination.NotifyDetail -> "NotifyDetail"
                         is Destination.TabsDetail -> "TabsDetail"
+                        is Destination.SegmentedButtonsDetail -> "SegmentedButtonsDetail"
                     }
                 }
             },
@@ -120,6 +122,7 @@ class NavigationState(
                         "PullToRefreshDetail" -> Destination.PullToRefreshDetail
                         "NotifyDetail" -> Destination.NotifyDetail
                         "TabsDetail" -> Destination.TabsDetail
+                        "SegmentedButtonsDetail" -> Destination.SegmentedButtonsDetail
                         else -> null
                     }
                 }
@@ -162,7 +165,8 @@ fun Destination.getMainTab(): Destination {
         is Destination.DialogsDetail,
         is Destination.PullToRefreshDetail,
         is Destination.NotifyDetail,
-        is Destination.TabsDetail -> Destination.Components
+        is Destination.TabsDetail,
+        is Destination.SegmentedButtonsDetail -> Destination.Components
 
         is Destination.Settings -> Destination.Settings
     }

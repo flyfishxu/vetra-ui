@@ -12,6 +12,7 @@ Components for user input and interaction:
 |-----------|-------------|--------------|
 | **[Buttons](input/buttons.md)** | Trigger actions | 5 variants, loading states, icons |
 | **[Icon Button](input/icon-button.md)** | Icon-only actions | 3 variants, circular |
+| **[Segmented Button](input/segmented-button.md)** | Mutually exclusive selection | Smooth animations, 2-5 segments |
 | **[Text Fields](input/text-fields.md)** | Text input | Floating labels, animated underline |
 | **[Switch](input/switch.md)** | Toggle states | Smooth animations, accessible |
 | **[Checkbox](input/checkbox.md)** | Multiple selection | Clean design, indeterminate state |
@@ -137,13 +138,15 @@ fun MyScreen() {
     - **Minimal action**: `VetraGhostButton`
     - **Icon-only action**: `VetraIconButton`
     - **Destructive action**: `VetraDangerButton`
+    - **Mutually exclusive selection**: `VetraSegmentedButton`
 
 === "For Input"
 
     - **Text entry**: `VetraTextField`
     - **On/off toggle**: `VetraSwitch`
     - **Multi-select**: `VetraCheckbox`
-    - **Single select**: `VetraRadioButton`
+    - **Single select (list)**: `VetraRadioButton`
+    - **Single select (inline)**: `VetraSegmentedButton`
     - **Value range**: `VetraSlider`
 
 === "For Display"
